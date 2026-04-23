@@ -1,0 +1,2 @@
+dosyanın ıcerıgıne bırseyler yazdım
+bu dosyayı node yazıyor
