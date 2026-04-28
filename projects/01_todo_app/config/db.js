@@ -1,7 +1,7 @@
-const { Sequelize ,DataTypes} = require('sequelize');
+const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
-
+//*pg kutuphanesi ile yaptgım new pool() ısın karsılıgı
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -9,60 +9,31 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
-    dialect: 'postgres',
+    dialect: 'postgres',  //benım adaptorum
     dialectOptions: {
-      ssl: { rejectUnauthorized: false }  
+      ssl: { rejectUnauthorized: false }  //bulut ile iletiişime geciyorum
     }
 
-  }
+  },
+  {
+     pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
+    },
+   },
 );
 
 
-//*models
-//*modeller buyuk harfle baslar.
-
-//*create a new table
-const Todo = sequelize.define("todos", {
-  /*  id: {
-    type: Number.INTEGER,
-    allowNull: false, //*defaultu true null olmasına ızın verıyor sequelize
-    unique: true, //*defaultu false primary key için bu ikisine dikkat
-
-    comment: "description",
-    primaryKey: true, //*default false
-    autoIncrement: true,
-    field:'todo_id',  //*backendde gormsını ıstedıgmz formatı
-    defaultValue:100 //*defaultu null
-  }, */
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-
-  description: DataTypes.TEXT, // shorthand usage.
-
-  priority: {
-    // -1: Low, 0: normal, 1: high
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-
-  isDone: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-
-  // not needed define createdAt and updatedAt fields. Cause they are created by sequelize.
-});
-
-//*senkronize işlemi sadece bır kere calısıyor
+//*senkronize işlemi sadece bır kere calısıyor.
+//*sync(): "Yukarıda çizdiğim krokiye (Model) bak, eğer veritabanında böyle bir tablo yoksa benim için oluştur" komutudur.
 sequelize.sync()
 
-sequelize
-  .authenticate()
-  .then(() => console.log("DB Bağlantı hazır "))
+
+ sequelize.authenticate()  //*baglantıyı test ediyor
+  .then(() => console.log("DB Bağlantı hazır "))  //*db ye gıdıp gelmek zaman aldıgı ıcın gerı kalan kaodları bloklamamak lazım
   .catch((err) => console.log("Hata:", err.message));
 
+  
   module.exports = sequelize;

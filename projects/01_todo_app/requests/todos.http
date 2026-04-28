@@ -1,1 +1,23 @@
-POST http://localhost:8000/
+GET http://localhost:8000/todos
+
+###content -type veriyi json formata cevırıyor app.use(express.json()) gorevlisi anlayamaz paketin formatını
+POST http://localhost:8000/todos
+Content-Type: application/json
+
+{
+    "title": ""
+}
+
+### update etme
+
+PUT http://localhost:8000/todos/3
+Content-Type: application/json
+
+{
+    "isDone": "true",
+    "Description": ""
+}
+
+
+###
+DELETE http://localhost:8000/todos/1
