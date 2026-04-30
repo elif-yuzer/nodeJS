@@ -15,5 +15,5 @@ app.listen(PORT,()=>console.log("calıstı"))
 
 
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB bağlandı ✅"))
+    .then(() => console.log("MongoDB bağlandı "))
     .catch(err => console.log(err))
