@@ -1,110 +1,69 @@
 # Recipe App — Server (Backend)
 
-This README explains how to configure and run the backend located in the `server/` folder, and documents installed packages with their aims.
+This README documents the backend (server/) — how to run it, configured entrypoint, installed packages, and core modules.
 
-## Prerequisites
-- Node.js (recommended v18+)
-- npm (comes with Node.js)
-
-## Install
-1. From the server folder:
+## Quick start
+1. Install dependencies:
 
    npm install
 
-2. Install runtime dependencies (if needed):
-
-   npm install express mongoose dotenv cors
-
-3. Install dev dependencies (if needed):
-
-   npm install -D typescript ts-node-dev @types/express @types/cors @types/node
-
-## Project layout (important files/folders)
-- src/
-  - index.ts — application entrypoint
-  - config/
-  - controllers/ — request handlers (routes implementation)
-  - routes/ — API route definitions
-  - models/ — data models
-- tsconfig.json — TypeScript configuration
-- package.json — dependency list
-- .env — environment variables (not committed)
-
-> If some folders are empty in this repo, the app expects them to exist for typical Express-style projects.
-
-## Installed packages and their aims
-### Dependencies
-- express (^5.2.1)
-  - Purpose: Minimal and flexible Node.js web framework used to define routes, middleware, and handle HTTP requests/responses.
-- cors (^2.8.6)
-  - Purpose: Middleware to enable Cross-Origin Resource Sharing (CORS), allowing the frontend to call this API from another origin.
-- dotenv (^17.4.2)
-  - Purpose: Loads environment variables from a `.env` file into process.env for local development.
-- mongoose (^9.6.1)
-  - Purpose: MongoDB Object Data Modeling (ODM) library — defines schemas, models, and provides convenient DB access and validation.
-
-### Dev dependencies
-- typescript (^6.0.3)
-  - Purpose: Adds static typing and compiles TS to JS.
-- ts-node-dev (^2.0.0)
-  - Purpose: Development server that runs TypeScript directly with automatic restarts on changes (hot-reload-like behavior).
-- @types/express (^5.0.6)
-  - Purpose: TypeScript type definitions for Express (compile-time only).
-- @types/cors (^2.8.19)
-  - Purpose: Type definitions for cors.
-- @types/node (^25.6.0)
-  - Purpose: Node.js type definitions for TypeScript (fs, path, process, etc.).
-
-## Configuration (Environment variables)
-Create a `.env` file in the server folder (do NOT commit it). Example variables the backend may need:
-
-PORT=3000
-NODE_ENV=development
-# Example DB (for Mongoose/MongoDB):
-MONGODB_URI=mongodb://user:pass@host:27017/dbname
-JWT_SECRET=your_jwt_secret_here
-
-Adjust names to match your implementation.
-
-## Development
-1. Add a dev script to package.json (recommended):
-
-```
-"scripts": {
-  "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-  "build": "tsc -p .",
-  "start": "node dist/index.js"
-}
-```
-
-2. Start dev server:
+2. Create a `.env` in the server folder (example below).
+3. Start development server:
 
    npm run dev
 
-## Build & Production
-1. Build TypeScript to JS:
+## Entry point & scripts
+- Entry point used in development: src/app.ts
+- package.json scripts (already configured):
+  - dev: ts-node-dev --respawn --transpile-only src/app.ts
+  - build: tsc
+  - start: node dist/index.js
 
-   npm run build
+## Environment variables (.env example)
+PORT=3000
+NODE_ENV=development
+MONGODB_URI=mongodb://user:pass@host:27017/dbname
+JWT_SECRET=your_jwt_secret_here
+CORS_ORIGIN=http://localhost:3000
 
-2. Start built app:
+## What the code contains
+- src/app.ts — app setup, middleware wiring, and server start. It calls src/config/db.ts to connect to MongoDB before listening.
+- src/config/db.ts — connects to MongoDB using process.env.MONGODB_URI. If missing, the app exits with an error.
+- src/middlewares/errorHandler.ts — centralized error handler that returns JSON errors and hides stack traces unless NODE_ENV=development.
+- src/services/authService.ts — registers users: checks existing email, hashes password with bcrypt, creates User.
+- src/controllers/recipeController.ts — sample controller: getAllRecipe returns all recipes.
+- src/controllers/userController.ts — currently empty; expected to hold user-related endpoints.
+- src/models/* — Mongoose models included:
+  - User (users.ts): name, email (unique), password, image, role
+  - Recipe (recipe.ts): title, preparation, media, publish flag, userId, categoryId, likes
+  - Category (categories.ts): name
 
-   npm run start
+## Installed packages and their aims
+### Runtime dependencies (from package.json)
+- express — web framework for routes and middleware
+- mongoose — MongoDB ODM used for models and DB access
+- dotenv — loads .env into process.env for local development
+- cors — CORS middleware
+- bcrypt — password hashing for auth
 
-(Ensure your `index.ts` compiles to `dist/index.js` or adjust the start script accordingly.)
+### Dev dependencies
+- typescript, ts-node-dev, @types/* — TypeScript and type definitions for development and hot reload
 
-## CORS
-Configure allowed origins in the code (e.g., in `src/index.ts`) or via an environment variable. Example:
+## Recommended config notes
+- Ensure MONGODB_URI is set before starting. src/app.ts currently calls connectDB() and exits on failure.
+- Keep db connection logic in src/config/db.ts simple: it connects once on startup. If you prefer per-request checks, add a small middleware to ensure connection without reconnecting on each request.
+- Implement routes and register them in src/app.ts (currently routes are not wired).
 
-```ts
-import cors from 'cors';
-app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
-```
+## How to run in production
+1. npm run build
+2. Ensure environment variables are provided (MONGODB_URI, JWT_SECRET,...)
+3. npm run start
 
-## Notes & Next steps
-- If using MongoDB, ensure `MONGODB_URI` is set and the DB is reachable. Add migration/seed scripts if required.
-- Replace example env names with the exact ones your code expects.
-- Never commit `.env` or secrets to git; use env variables in CI or a secrets manager for production.
+## Next steps
+- Implement userController and register routes in app.ts
+- Add request validation and authentication middleware
+- Add database seed/migration scripts if needed
 
 ---
 
-
+Updated README to reflect current project files and dependencies.
