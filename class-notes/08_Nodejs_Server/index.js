@@ -37,7 +37,7 @@ function parseRequestBody(req,callback) {
 
   //**
 
-//?Olay Tabanlı Mimari (Event-Driven): req objesi bir Readable Stream'dir. Node.js, ağ üzerinden gelen ham baytları (binary) parça parça yakalarKitapta anlatılan I/O yavaşlığı nedeniyle veri tek seferde gelmez. Her parça ulaştığında data olayı tetiklenir. Sen burada bir "koleksiyoncu" gibi bu parçaları body değişkeninde biriktiriyorsunreq.on("end", () => { ... }). */
+//?Olay Tabanlı Mimari (Event-Driven): req objesi bir Readable Stream'dir. Node.js, ağ üzerinden gelen ham baytları (binary) parça parça yakalarKitapta anlatılan I/O yavaşlığı nedeniyle veri tek seferde gelmez. Her parça ulaştığında data olayı tetiklenir. Sen burada bir "koleksiyoncu" gibi bu parçaları body değişkeninde biriktiriyorsun req.on("end", () => { ... }). */
 
   req.on("data", (chunk) => {
     body += chunk;
@@ -61,7 +61,7 @@ req.on("end", () => {
 
 //*createserver ve listener
 
-// ?her yeni http isteği httpcreate servera verdiğimz listner sayesınde tanımlı olan porttan gelen http isteğini fırlatır event benım yazdıgım bu buyk callback fonksıyonu handler fonksıyonu yanı handler(tepki)*/
+// ?her yeni http isteği httpcreate servera verdiğimz listner sayesınde tanımlı olan porttan gelen http isteğini fırlatır event benım yazdıgım bu buyk callback fonksıyonu handler fonksıyonu yanı tepki*/
 
 const server = http.createServer((req, res) => {
   console.log(req.method,req.url);

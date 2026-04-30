@@ -1,0 +1,11 @@
+
+GET  http://localhost:3000/topla?sayi1=10
+
+
+###
+GET http://localhost:3000/ak
+
+
+###
+GET http://localhost:3000/abHell 
+

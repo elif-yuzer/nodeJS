@@ -32,7 +32,7 @@ module.exports.middleFunc2 = (req, res, next) => {
 
 /* ------------------------------------------------------ */
 
-module.exports = {
+/* module.exports = {
   middleFunc1: (req, res, next) => {
     req.message1 = "middleFunc1 started.";
     next();
@@ -42,5 +42,26 @@ module.exports = {
     next();
   },
 };
-
+ */
 // module.exports = obj
+
+const express = require("express");
+const app = express();
+
+app.use((req, res, next) => {
+  console.log("bu bir middleware");
+});
+
+app.use((req, res, next) => {
+  console.log("2. middleware");
+  next();
+});
+
+app.get("/", (req, res) => {
+  console.log("route handler");
+  res.send("hello");
+});
+
+app.listen(3000, () => {
+  console.log("Server çalışıyor");
+});

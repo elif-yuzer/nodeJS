@@ -23,7 +23,7 @@ const urunler = [
 
 
 //**Yönlendirme (Routing / Demultiplexer)Express.js:
-// ? Express.js: app.get('/urunler', ...) ve app.post('/urunler', ...) metotlarını kullandınKitap Bağlantısı: Express, arka planda bir "Rota Listesi" (Router Stack) tutar. Sen app.get dediğinde, bu listeye yeni bir kural ekler. İstek geldiğinde, Express senin yazdığın o karmaşık if/else koşullarını arka planda sırayla kendi test eder. Eşleşme bulduğunda, paketi o rotanın fonksiyonuna (handler) teslim eder.*/
+// ? Express.js: app.get('/urunler', ...) ve app.post('/urunler', ...) metotlarını kullandınKitap Bağlantısı: Express, arka planda bir "Rota Listesi" (Router Stack) tutar. Sen app.get dediğinde, bu listeye yeni bir kural ekler. İstek geldiğinde, Express senin yazdığın o karmaşık if/else koşullarını arka planda sırayla kendi test eder. Eşleşme bulduğunda, paketi o rotanın fonksiyonuna(controllerda yazdıgın crud ıslemlerı ) (handler) teslim eder.*/
 
 
 
