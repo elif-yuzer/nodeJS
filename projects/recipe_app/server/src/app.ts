@@ -4,12 +4,20 @@ import express from "express";
 
 import connectDB from "./config/db";
 import errorHandler from "./middlewares/errorHandler";
-
+import { router } from "./routes/authRoutes";
 const app = express();
+app.use(express.json())
+
 
 //*mddlewares
 
 ///*routes
+
+app.use("/api/users",router)
+
+
+
+
 
 app.all("/*splat", (req, res) => {
   res.status(404);
@@ -27,7 +35,7 @@ const startServer = async () => {
     const PORT = process.env.PORT ?? 3000;
 
     app.listen(PORT, () => {
-      console.log(`Server ${PORT} portunda çalışıyor`);
+    
     });
     console.log("server started");
   } catch (error) {

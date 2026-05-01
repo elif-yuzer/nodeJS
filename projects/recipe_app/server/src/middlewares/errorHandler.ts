@@ -1,11 +1,11 @@
 import { NextFunction,Request,Response } from "express"
-import { error } from "node:console"
+
 
 
 const errorHandler=(err:any,req:Request,res:Response,next:NextFunction)=>{
 
 
-     const statusCode = err.statusCode || 400;
+     const statusCode = err.statusCode || 500;
 
 
     res.status(statusCode).send({

@@ -1,0 +1,11 @@
+###
+POST  http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+  "firstName": "Eliff",
+  "lastName": "Yuzer",
+  "email": "elif@yuzer123.com",
+  "password": "eliftest1234",
+  "role": "user"
+}
