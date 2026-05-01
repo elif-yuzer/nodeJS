@@ -33,7 +33,7 @@ CORS_ORIGIN=http://localhost:3000
 - src/services/authService.ts — registers users: checks existing email, hashes password with bcrypt, creates User.
 - src/controllers/recipeController.ts — sample controller: getAllRecipe returns all recipes.
 - src/controllers/userController.ts — currently empty; expected to hold user-related endpoints.
-- src/models/* — Mongoose models included:
+- src/models/\* — Mongoose models included:
   - User (users.ts): name, email (unique), password, image, role
   - Recipe (recipe.ts): title, preparation, media, publish flag, userId, categoryId, likes
   - Category (categories.ts): name
