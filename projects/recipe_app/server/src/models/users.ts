@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const usersSchema = new mongoose.Schema(
   {
-    firstName: { type: String, required: true },
+    firstName: { type: String, required: true, trim:true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -13,3 +13,4 @@ const usersSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("User", usersSchema);
+ 

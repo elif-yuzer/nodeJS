@@ -92,3 +92,22 @@ Bir postUser işlemi var. Burada diyorum ki, controller dediğim şey request, r
 Burada veritabanı işlemi olduğu için asenkron bir yapı kullandım. Destructuring ettiğim bu bilgileri aşçıya ilettim. Eğer bu userInfo'dan dönen bilgiler tamamsa, statüsü 201 olan ve datası oluşan bir create işlemi yapmış olacağım.
 
 Buradaki userInfo (Service) dediğimiz şey zaten gelen bilgileri alıyor, veritabanı ile iletişime geçiyor. İlk önce bir kontrol yapıyor: "Bu email adında bir kayıt var mı?" Varsa bana "Bu kullanıcı zaten var" diye bir hata fırlatıyor. Eğer yoksa, bu kullanıcının şifresini alıyor, bir hashliyor (şifreliyor). Sonrasında bunu newUser adıyla veritabanına create edip kaydediyor. Sonra da bu datayı geri döndürüyor. Bu fonksiyon serviste işlemini bitirip döndürdüğünde, Controller katmanında işlem başarılı bir şekilde sonuçlanmış ve kullanıcı yaratılmış oluyor.
+
+### JWT TOKEN KONUSU
+Harika bir tercih! Authentication (Kimlik Doğrulama) ve Authorization (Yetkilendirme) konuları modern web geliştirmenin kalbidir.
+
+Hemen npm paketi sorunun cevabını vereyim: Evet, bu iş için dünya standartlarında kullanılan ve projene eklemen gereken paket jsonwebtoken paketidir. (TypeScript kullandığın için tiplerini tanıması adına @types/jsonwebtoken paketini de geliştirici ortamına eklemen gerekecek).
+
+
+Hemen npm paketi sorunun cevabını vereyim: Evet, bu iş için dünya standartlarında kullanılan ve projene eklemen gereken paket jsonwebtoken paketidir. (TypeScript kullandığın için tiplerini tanıması adına @types/jsonwebtoken paketini de geliştirici ortamına eklemen gerekecek).
+JWT (JSON Web Token) Mantığı Nedir?
+
+Restoran benzetmemize harika bir güncelleme getirelim. JWT, lüks bir restorandaki VIP Bileklik / Yaka Kartı sistemidir.
+
+    Giriş (Login - Authentication): Müşteri kapıya gelir, kimliğini (e-posta) ve parolasını (şifre) gösterir. Aşçı kilerdeki kayıtlara bakar. "Evet, bu şifre doğru, kişi bizden" der.
+
+    Bileklik Takılması (Token Üretimi): Aşçı, Müşteriye bir VIP bileklik takar. Bu bilekliğin üzerinde müşterinin sipariş numarası (Veritabanı ID'si) ve yetkisi (örneğin sadece "user" mı yoksa "admin" mi olduğu) yazar.
+
+    Rahatça Dolaşma (Authorization): Müşteri artık restoranda içki sipariş ederken veya özel odalara girerken tekrar kimlik veya şifre göstermez! Sadece kolundaki o bilekliği (JWT) gösterir.
+
+Bu sistemin en büyük avantajı "Stateless" (Durumsuz) olmasıdır. Yani Güvenlik Görevlisinin her siparişte koşup kilerdeki deftere (veritabanına) bakmasına gerek kalmaz. Bilekliğin (Token) kendi içindeki dijital mühür, o kişinin kim olduğunu zaten tek başına kanıtlar! Sunucuyu hiç yormaz.

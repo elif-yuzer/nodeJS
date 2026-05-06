@@ -13,7 +13,9 @@ app.use(express.json())
 
 ///*routes
 
-app.use("/api/users",router)
+
+//*api naming standardizasyonuna dikkat
+app.use("/api/v1/users",router)
 
 
 

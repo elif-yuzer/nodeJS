@@ -1,0 +1,44 @@
+@baseUrl=http://127.0.0.1:5002
+
+# @name home
+
+###
+
+GET {{baseUrl}}
+
+
+###
+
+# @name categorylist
+GET {{baseUrl}}/blogs/categories
+###
+
+# @name categoryCreate
+post {{baseUrl}}/blogs/categories
+Content-Type: application/json
+
+{
+    "name": "Category3 created"
+}
+
+
+###
+
+# @name categoryRead
+get {{baseUrl}}/blogs/categories/69fabb1bf779b3eeac3a2d1a
+
+
+###
+
+# @name categoryUpdate
+put {{baseUrl}}/blogs/categories/69fabb1bf779b3eeac3a2d1a
+Content-Type: application/json
+
+{
+    "name": "Category2 update edildi"
+}
+
+###
+
+# @name categoryDelete
+delete {{baseUrl}}/blogs/categories/69fabb20f779b3eeac3a2d1b
