@@ -1,11 +1,53 @@
 ###
-POST  http://localhost:5000/api/users
+POST   http://localhost:5000/api/v1/users 
 Content-Type: application/json
 
 {
-  "firstName": "Eliff",
+  "firstName": "Elif",
   "lastName": "Yuzer",
-  "email": "elif@yuzer123.com",
+  "email": "elif@yuzer12.com"
   "password": "eliftest1234",
   "role": "user"
 }
+###
+
+POST   http://localhost:5000/api/v1/users 
+Content-Type: application/json
+
+{
+  "firstName": "Eda",
+  "lastName": "Yuzer",
+  "email": "eda@yuzer12.com",
+  "password": "edatest123",
+  "role": "user"
+}
+
+###
+POST   http://localhost:5000/api/v1/users 
+Content-Type: application/json
+
+{
+  "firstName": "Noro",
+  "lastName": "Optimizer",
+  "email": "noro@example.com",
+  "password": "password123",
+  "role": "admin"
+}
+
+### 
+//login
+POST   http://localhost:5000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "email": "noro@example.com",
+  "password": "password123"
+}
+
+
+//access token aldm simdi korumalı odaya gırmyeyı dene
+
+###
+
+GET http://localhost:5000/api/v1/users/protected-room
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWZjMDY2MmZjZDkyYjcxMGE4YzVkNjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTc3ODEyNTI4NywiZXhwIjoxNzc4MTI3MDg3fQ.uzbc9hLkXPHDXppS2eiyEQlvSVtIw_bJGdLLVX2TxAA
