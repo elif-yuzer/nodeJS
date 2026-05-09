@@ -1,0 +1,49 @@
+//POST http://localhost:3500/test
+//Content-Type: application/json
+
+//{
+     //"isim": "ahmet" 
+//}
+
+
+@baseUrl=http://127.0.0.1:3500
+
+
+# @name categoryCreate
+
+POST {{baseUrl}}/blogs/categories
+Content-Type: application/json
+
+{
+  "name": "Science"
+}
+
+###
+# @name categoryList
+get {{baseUrl}}/blogs/categories
+
+###
+ # @name categoryReadbyName
+GET {{baseUrl}}/blogs/categories/name/Art
+
+
+//listbyid
+###
+
+# @name categoryReadbyId
+###
+GET {{baseUrl}}/blogs/categories/id/69fe78ef7d7d3f41f1262548
+
+
+# @name categoryUpdate
+###
+PUT {{baseUrl}}/blogs/categories/update/69fe78ef7d7d3f41f1262548
+Content-Type: application/json
+
+{
+    "name": "Health olarak guncellendi"
+}
+
+# @name categoryDelete
+###
+delete {{baseUrl}}/blogs/categories/69fe79017d7d3f41f126254a

@@ -10,7 +10,9 @@ import morgan from "morgan"
 const app = express();
 app.use(express.json())
 
-app.use(morgan('dev'))
+if(process.env.NODE_ENV==="development"){
+  app.use(morgan('dev'))
+}
 //*mddlewares
 
 ///*routes
@@ -23,14 +25,15 @@ app.use("/api/v1/users",router)
 
 
 
-app.all("/*splat", (req, res) => {
-  res.status(404).send({
-    error:true,
-    message:'Route is not found'
-  })
-/*   throw new Error("Route is not found."); */
+app.all("/*splat", (req, res,next) => {
+ 
+const err:any = new Error("Route is not found")
+err.statusCode=404
+next(err)
   
 });
+
+
 
 //*errorHandler en son
 
