@@ -1,0 +1,80 @@
+@baseUrl = http://127.0.0.1:3500
+
+###
+# @name home
+GET {{baseUrl}}
+
+###
+# @name categoryList
+GET {{baseUrl}}/blogs/v1/categories
+
+###
+# @name categoryCreate
+POST {{baseUrl}}/blogs/v1/categories
+Content-Type: application/json
+
+{
+    "name": "Category b"
+}
+
+###
+# @name categoryRead
+GET {{baseUrl}}/blogs/v1/categories/69ff28b23d782a270417ab72
+
+###
+# @name categoryUpdate
+PUT {{baseUrl}}/blogs/v1/categories/69ff28b23d782a270417ab72
+Content-Type: application/json
+
+{
+    "name": "Software"
+}
+
+###
+# @name categoryDelete
+DELETE {{baseUrl}}/blogs/v1/categories/69f86bf22265bbd9fe6122e9
+
+###
+# @name postCreate
+POST {{baseUrl}}/blogs/v1/post
+Content-Type: application/json
+
+{
+    "categoryId": "69f86bf22265bbd9fe6122e9",
+    "title": "JavaScript'te Closure Nedir?",
+    "content": "Closure, bir fonksiyonun kendi scope'u dışındaki değişkenlere erişebilmesi özelliğidir. Bu yapı sayesinde private değişkenler ve fabrika fonksiyonları oluşturulabilir."
+}
+
+###
+# @name postList
+GET {{baseUrl}}/blogs/v1/posts
+
+###
+# @name postRead
+GET {{baseUrl}}/blogs/v1/posts/69ff2fe55227adb171ed8b3c
+
+###
+# @name postUpdate
+PUT {{baseUrl}}/blogs/v1/posts/69ff2fe55227adb171ed8b3c
+Content-Type: application/json
+
+{
+    "categoryId": "69ff28b23d782a270417ab72"
+}
+###
+# @name postDelete
+
+delete {{baseUrl}}/blogs/v1/posts/69ff30135227adb171ed8b3d
+
+
+###? USERS###
+
+post {{baseUrl}}/users/v1
+Content-Type: application/json
+
+{
+    # "firstName": "usper f a ",
+    # "lastName": "user l a",
+    "email": "po@gmail.com",
+    "password": "user p b"
+}

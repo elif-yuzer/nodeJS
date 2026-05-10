@@ -1,0 +1,19 @@
+{
+  "name": "16-blogapi_usermodel",
+  "version": "1.0.0",
+  "description": "1.const mongoose = require('mongoose')\r 2.const dbConnection = () => {\r return mongoose ← return: promise kaybolmasın 3. .connect(process.env.MONGODB_URI) 4. .then(() => console.log('db connected')) 5. .catch(err => console.log(err)) ← err: mongoose fırlatır (err = mongoose'dan gelir,\r .catch JS bunu yakalar\r )",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2",
+    "morgan": "^1.10.1"
+  }
+}

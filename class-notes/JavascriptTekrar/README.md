@@ -1,6 +1,7 @@
 Gönderdiğin metin tam cümlenin ortasında ("but this is the g..." - muhtemelen "general approach" diyecekti) yarım kalmış. Ancak JavaScript dünyasının en meşhur, en kafa karıştırıcı ve mülakatlarda en çok sorulan konularından birine giriş yapmışsın.
 
 Kod yazmamı istemediğini bildiğim için, işin sözdizimine (syntax) hiç girmeden V8 motorunun arka planda bu sayıları nasıl işlediğini ve neden bu krizlerin yaşandığını mantıksal olarak inceleyelim.
+
 1. NaN (Not a Number) Paradoksu
 
 Kitabın ilk değindiği nokta çok kritiktir: JavaScript'te NaN (Sayı Değil) değeri, kendisi de dahil olmak üzere evrendeki hiçbir şeye eşit değildir.
@@ -26,3 +27,65 @@ Kitabın son kısmında bahsettiği bu değer, JavaScript'in "kabul edilebilir h
 Geliştirdiğin projede kitap fiyatları (fiyat tablosu) var diyelim. Bir kitaba %15 indirim uyguladığında, arkada JavaScript'in bu küsurat (floating-point) hatasını yapma ihtimali çok yüksektir.
 
 Sence finansal verilerle (fiyat, ceza tutarı, bakiye vb.) uğraşırken, JavaScript'in bu 0.1 yuvarlama krizlerinden tamamen kaçınmak için, veritabanına fiyatları ondalıklı (örneğin 15.50) kaydetmek yerine nasıl bir formatta (hangi matematiksel hileyle) kaydetmek en güvenli "Best Practice" (en iyi uygulama) olur? 🧐
+
+---
+
+# ✅ Validation için JavaScript Tekrar Listesi
+
+---
+
+## 1. String Temelleri
+
+- [ ] `length` ile uzunluk kontrolü
+- [ ] `includes()` ile içerik kontrolü
+- [ ] `indexOf()` ile konum bulma
+- [ ] `slice()` ile parça alma
+- [ ] `split()` ile bölme
+- [ ] `trim()` ile boşluk temizleme
+- [ ] `toLowerCase()` / `toUpperCase()` ile harf dönüşümü
+
+---
+
+## 2. Karakter Kontrolü
+
+- [ ] `charCodeAt()` ile ASCII kodu alma
+- [ ] Harf aralığı karşılaştırması (`>=`, `<=`)
+- [ ] `for` döngüsü ile her karakteri tek tek kontrol etme
+
+---
+
+## 3. Koşullar ve Mantık
+
+- [ ] `if/else` ile kural kontrolü
+- [ ] `&&`, `||`, `!` operatörleri
+- [ ] Erken `return` ile çıkış mantığı
+
+---
+
+## 4. Array Metotları
+
+- [ ] `every()` ile tüm kuralların geçmesi
+- [ ] `some()` ile en az bir kuralın geçmesi
+- [ ] `filter()` ile geçersiz alanları ayıklama
+- [ ] `map()` ile hata mesajlarını toplama
+
+---
+
+## 5. Fonksiyon Yapısı
+
+- [ ] Tek sorumluluk — her fonksiyon bir şey kontrol eder
+- [ ] `return` ile `true` / `false` döndürme
+- [ ] `return` ile obje döndürme `{ valid, message }`
+
+---
+
+## 6. Regex
+
+- [ ] Temel regex sözdizimi
+- [ ] `test()` metodu
+- [ ] Karakter sınıfları `[A-Z]`, `[0-9]`
+- [ ] Başlangıç `^` ve bitiş `$`
+
+---
+
+> VS Code'da kutucukları işaretlemek için `- [ ]` → `- [x]` yap.

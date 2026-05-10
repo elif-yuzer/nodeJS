@@ -2,7 +2,6 @@
 const mongoose = require("mongoose");
 const error = require("../middlewares/errorHandler");
 
-
 //?mongoose.connect() bir söz (promise) veriyor — "bağlanmaya çalışacağım, bitince haber veririm"
 //?await ancak önüne promise dönen bir şey gelirse bekler. return olmazsa promise yok olur gider.
 //?
