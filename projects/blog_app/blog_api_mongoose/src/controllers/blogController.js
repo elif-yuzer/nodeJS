@@ -59,6 +59,10 @@ module.exports = {
 delete: async (req, res) => {
   const result = await Category.deleteOne({ _id: req.params.id });
 
+  console.log("🔥 DELETE HIT")
+console.log("ID:", req.params.id)
+console.log("RESULT:", result)
+
   if (result.deletedCount === 0) {
     return res.status(404).json({
       error: true,

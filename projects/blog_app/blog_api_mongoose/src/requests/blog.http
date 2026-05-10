@@ -15,7 +15,7 @@ POST {{baseUrl}}/blogs/categories
 Content-Type: application/json
 
 {
-  "name": "Science"
+  "name": "test4"
 }
 
 ###
@@ -46,4 +46,4 @@ Content-Type: application/json
 
 # @name categoryDelete
 ###
-delete {{baseUrl}}/blogs/categories/69fe79017d7d3f41f126254a
+delete {{baseUrl}}/blogs/categories/69fefdca45ce9a70b2bd41c8
