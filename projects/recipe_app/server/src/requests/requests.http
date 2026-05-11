@@ -27,10 +27,10 @@ POST   http://localhost:5000/api/v1/users
 Content-Type: application/json
 
 {
-  "firstName": "Noro",
-  "lastName": "Optimizer",
-  "email": "noro@example.com",
-  "password": "password123",
+  "firstName": "NoroTest",
+  "lastName": "OptimizerTest",
+  "email": "norotest@example.com",
+  "password": "password1234",
   "role": "admin"
 }
 
@@ -40,8 +40,8 @@ POST   http://localhost:5000/api/v1/users/login
 Content-Type: application/json
 
 {
-  "email": "noro@example.com",
-  "password": "password123"
+  "email": "norotest@example.com",
+  "password": "Test1234"
 }
 
 
@@ -51,3 +51,16 @@ Content-Type: application/json
 
 GET http://localhost:5000/api/v1/users/protected-room
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OWZjMDY2MmZjZDkyYjcxMGE4YzVkNjUiLCJyb2xlIjoidXNlciIsImlhdCI6MTc3ODEyNTI4NywiZXhwIjoxNzc4MTI3MDg3fQ.uzbc9hLkXPHDXppS2eiyEQlvSVtIw_bJGdLLVX2TxAA
+
+###
+# @name canlı
+
+POST http://132.226.219.253/api/v1/users
+Content-Type: application/json
+
+{
+  "firstName": "Canlı",
+  "lastName": "Test",
+  "email": "canli@test.com",
+  "password": "Test1234"
+}
