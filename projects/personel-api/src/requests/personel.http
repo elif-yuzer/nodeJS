@@ -19,12 +19,12 @@ Content-Type: application/json
 ### 
 
 # @name login
-post {{baseUrl}}/users/login
+post {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "test1@test.com",
-    "password": "12345678",
+    "email": "elif@gmail.com",
+    "password": "test",
     "rememberMe": true
 }
 
@@ -151,3 +151,20 @@ Content-Type: application/json
 
 # @name userDelete
 delete {{baseUrl}}/users/69f86bf22265bbd9fe6122e9
+
+###
+# @name login
+post {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "elif@gmail.com",
+    "username": "elif123",
+    "password": "test",
+    "rememberMe": true
+}
+
+###
+# @name logout
+
+post {{baseUrl}}/auth/logout

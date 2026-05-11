@@ -36,7 +36,7 @@ app.all("/", (req, res) => {
     session: req.session,
   });
 });
-
+app.use("/auth", require("./src/routes/authRoute"));
 app.use("/departments", require("./src/routes/department.route"));
 app.use("/personnels", require("./src/routes/personnel.route"));
 /* ----------------------------------------- */
