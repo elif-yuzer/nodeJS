@@ -5,7 +5,7 @@ import { BadRequest, Forbidden } from '../utils/error'
 declare global {
   namespace Express {
     interface Request {
-      user?: { id: string; role: string }    // bu kısımda yaptıgım olay Req objesi içinde normalde req.body,header,params,url falan var kullanıcıdan geln bılgılerı user metodu ile req objsei içinde gondermek ıın bu sekılde ekleme yapılıyorreq.user    → middleware'den gelen kullanıcı bilgisi
+      user?: { id: string; role: string }    //* bu kısımda yaptıgım olay Req objesi içinde normalde req.body,header,params,url falan var kullanıcıdan geln bılgılerı user metodu ile req objsei içinde gondermek ıcın bu sekılde ekleme yapılıyor req.user    → middleware'den gelen kullanıcı bilgisi
     }
   }
 }

@@ -8,6 +8,7 @@ import errorHandler from "./middlewares/errorHandler";
 import { router } from "./routes/authRoutes";
 import morgan from "morgan"
 const app = express();
+
 app.use(express.json())
 
 if(process.env.NODE_ENV==="development"){

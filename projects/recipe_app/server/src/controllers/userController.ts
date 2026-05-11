@@ -28,9 +28,9 @@ const postUser = async (req: Request, res: Response, next: NextFunction) => {
 
 const UserLogin=async(req:Request,res:Response,next:NextFunction)=>{
   try {
-    const {email,password}=req.body
+    const {email,password,username}=req.body
 
-    const {  accessToken, refreshToken } = await handleLogin(email, password);
+    const {  accessToken, refreshToken } = await handleLogin(email, password,username);
 
   
    res.cookie('jwt',refreshToken, {httpOnly:true,maxAge:24*60*60*1000})

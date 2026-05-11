@@ -41,8 +41,10 @@ Content-Type: application/json
 
 {
   "email": "norotest@example.com",
-  "password": "Test1234"
+  "password": "password1234"
 }
+
+
 
 
 //access token aldm simdi korumalı odaya gırmyeyı dene

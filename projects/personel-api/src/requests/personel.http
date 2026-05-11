@@ -1,0 +1,153 @@
+@baseUrl = http://127.0.0.1:8000
+
+# @name home
+GET {{baseUrl}}
+
+### 
+
+# @name register
+post {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "firstName": "testF",
+    "lastName": "testL",
+    "email": "test1@test.com",
+    "password": "12345678"
+}
+
+### 
+
+# @name login
+post {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email": "test1@test.com",
+    "password": "12345678",
+    "rememberMe": true
+}
+
+### 
+
+# @name logout
+post {{baseUrl}}/users/logout
+
+###
+
+# @name departmentList
+get {{baseUrl}}/departments
+
+###
+
+# @name departmentCreate
+post {{baseUrl}}/departments
+Content-Type: application/json
+
+{
+    "name": "department c"
+}
+
+###
+
+# @name departmentRead
+get {{baseUrl}}/departments/6a01d2fa06a9fe7af549d257
+
+###
+
+# @name departmentUpdate
+put {{baseUrl}}/departments/6a01d2fa06a9fe7af549d257
+Content-Type: application/json
+
+{
+    "name": "department abc"
+}
+
+###
+
+# @name departmentDelete
+delete {{baseUrl}}/departments/6a01d35a06a9fe7af549d258
+
+### POSTS ####
+
+# @name postList
+get {{baseUrl}}/personnels
+
+# &search[title]=test 4
+# &sort[createdAt]=desc
+
+###
+
+# @name postCreate
+post {{baseUrl}}/personnels
+Content-Type: application/json
+
+{
+  "departmentId": "6820c8f2c8f1a1b23d456789",
+  "username": "elif123",
+  "password": "test",
+  "firstName": "Elif",
+  "lastName": "Yılmaz",
+  "phone": "05555555555",
+  "email": "elif@gmail.com",
+  "title": "Backend Developer",
+  "salary": {
+    "EUOR":5000,
+    "monthly": 50000
+  },
+  "description": "Node.js developer",
+  "permissions": {
+    "isAdmin": true,
+    "isLead": false
+  }
+}
+###
+
+# @name postRead
+get {{baseUrl}}/personnels/6a01eba207d434eb95a1e358
+
+###
+
+# @name postUpdate
+put {{baseUrl}}/personnels/6a01eba207d434eb95a1e358
+Content-Type: application/json
+
+{
+  "salary": {
+    "EURO": 50000,
+    "monthly": 500
+  }
+}
+
+###
+
+# @name postDelete
+delete {{baseUrl}}/blogs/posts/69f9a21017bad8c5e92e01d9
+
+### USERS ###
+
+# @name userList
+get {{baseUrl}}/users
+# ?page=1
+# &limit=1
+# ?search[email]=test1
+
+###
+
+# @name userRead
+get {{baseUrl}}/users/69f86c482265bbd9fe6122eb
+
+###
+
+# @name userUpdate
+put {{baseUrl}}/users/69f86c482265bbd9fe6122eb
+Content-Type: application/json
+
+{
+    "name": "user abc"
+}
+
+###
+
+# @name userDelete
+delete {{baseUrl}}/users/69f86bf22265bbd9fe6122e9

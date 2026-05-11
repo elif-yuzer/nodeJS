@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import User from "../models/users";
 import bcrypt from "bcrypt";
 import Jwt  from "jsonwebtoken";
-import { BadRequest } from "../utils/error";
+import { BadRequest, Forbidden } from "../utils/error";
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ export const UserInfo = async (
   return newUser;
 };
 
-export const handleLogin = async (email: string, password: string) => {
+export const handleLogin = async (email: string,username:string, password: string) => {
   /* email yoksa mongoose hata fırlatmaz null doner */
 
 
@@ -54,8 +54,10 @@ export const handleLogin = async (email: string, password: string) => {
    const  accessToken=Jwt.sign(
       {"_id":foundedUser._id,"role":foundedUser.role},
       process.env.ACCESS_TOKEN_SECRET as string,
-      {expiresIn:'30m'}
+      {expiresIn:'1m'}
     )
+
+   
    const  refreshToken=Jwt.sign(
       {"_id":foundedUser._id,"role":foundedUser.role},
       process.env.REFRESH_TOKEN_SECRET as string,
