@@ -1,0 +1,71 @@
+@baseUrl = http://127.0.0.1:8000
+
+###
+
+
+# @name personnelList
+get {{baseUrl}}/personels
+
+###
+
+# @name personnelCreate
+post {{baseUrl}}/personels
+Content-Type: application/json
+
+{
+  "userName": "Elif123",
+  "firstName": "elif123",
+  "lastName": "User123",
+  "departmentId": "6a038da634cd87ba1864ef77",
+  "title": "System Admin12",
+  "email": "adminelif123@test.com",
+  "password": "1234",
+  "description": "This is admin user12",
+  "phone": "+9015551112233",
+  "salary": {
+    "amount": 500100,
+    "currency": "TRY"
+  },
+  "role": "admin",
+  "permissions": {
+    "canEdit": true,
+    "canDelete": true,
+    "canCreate": true,
+    "canView": true
+  },
+  "isActive": true,
+  "startedAt": "2026-05-12T00:00:00.000Z"
+}
+
+# {
+#     "firstName": "adminF",
+#     "lastName": "adminL",
+#     "userame": "admin",
+#     "departmentId":"6a01a04040a52a22da417b78",
+#     "title":"admin",
+#     "email": "admin@test.com",
+#     "password": "1234",
+#     "description": "this is admin",
+#     "isAdmin": true,
+#     "phone": "01234567890"
+# }
+
+###
+
+# @name personnelRead
+get {{baseUrl}}/personels/6a01a22139ec49344f7857a8
+###
+
+# @name personnelUpdate
+put {{baseUrl}}/personels/6a03a3b347fdab14347de022
+Content-Type: application/json
+
+{
+    "role": "employee"
+}
+
+
+###
+
+# @name personnelDelete
+delete {{baseUrl}}/personels/6a03a3b347fdab14347de022

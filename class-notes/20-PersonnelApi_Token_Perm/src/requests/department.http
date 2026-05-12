@@ -1,0 +1,37 @@
+@baseUrl = http://127.0.0.1:8000
+
+###
+
+# @name departmentlisteleme
+get {{baseUrl}}/departments
+
+###
+
+# @name departmentRead
+get {{baseUrl}}/departments/6a01a04040a52a22da417b78
+
+
+###
+
+# @name departmentCreate
+post {{baseUrl}}/departments
+Content-Type: application/json
+
+{
+    "name": "department software"
+}
+
+###
+
+# @name departmentUpdate
+put {{baseUrl}}/departments/6a038839d2b39772287ec25e
+Content-Type: application/json
+
+{
+    "name": "department guncellendi 2.kez"
+}
+###
+# @name departmentDelete
+delete {{baseUrl}}/departments/6a038839d2b39772287ec25e
+
+###
