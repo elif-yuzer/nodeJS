@@ -10,13 +10,13 @@ module.exports = {
       throw new CustomError("department is required", 400);
     const result = await Personel.create({
       ...req.body,
-      role: "employee",
+     /*  role: "employee",
       permissions: {
         canEdit: false,
         canDelete: false,
         canCreate: false,
         canView: true,
-      },
+      }, */
     });
 
     res.status(201).send({
@@ -25,20 +25,24 @@ module.exports = {
     });
   },
   list: async (req, res) => {
+      console.log("req.user:", req.user)
     // if(!req.user?.isAdmin) throw new CustomError('You are not authorized.', 401)
 
-    const result = await res.getModelList(Personel);
+    //const result = await res.getModelList(Personel);
+    //department:name gelsin ,id otomatik eklenir
+    const data = await Personel.find().populate({path:'departmentId',select:'name -_id'}).exec();
 
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(Personel),
-      result,
+      data,
     });
   },
 
   read: async (req, res) => {
-    const data = await Personel.findOne({ _id: req.params.id });
-    console.log(result);
+      const userName = req.body?.userName
+    const data = await Personel.findOne({userName});
+   
 
     if (!result) {
       throw new CustomError("Data is not found", 404);
@@ -56,7 +60,7 @@ module.exports = {
     const data = await Personel.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-      if (!data) throw new CustomError("Data is not found", 404);
+    if (!data) throw new CustomError("Data is not found", 404);
 
     res.status(200).send({
       error: false,

@@ -13,4 +13,6 @@ router.route("/").get(list).post(create);
 
 router.route("/:id").get(read).put(update).delete(Deleted);
 
+router.route("/:userName").get(read)
+
 module.exports = router;

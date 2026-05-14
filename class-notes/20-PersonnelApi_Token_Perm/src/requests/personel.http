@@ -50,18 +50,21 @@ Content-Type: application/json
 #     "phone": "01234567890"
 # }
 
+
+
 ###
 
 # @name personnelRead
-get {{baseUrl}}/personels/6a01a22139ec49344f7857a8
+get {{baseUrl}}/personels?userName=elif
 ###
 
 # @name personnelUpdate
-put {{baseUrl}}/personels/6a03a3b347fdab14347de022
+put {{baseUrl}}/personels/6a039ffa3c1a4314d1640bc2
 Content-Type: application/json
+Authorization: Token a5d6bca2a9b4476ba7dae323d6c276d1d91437fa58b4c4d652c2a73623b88bfb
 
 {
-    "role": "employee"
+    "role": "lead"
 }
 
 
@@ -69,3 +72,34 @@ Content-Type: application/json
 
 # @name personnelDelete
 delete {{baseUrl}}/personels/6a03a3b347fdab14347de022
+
+
+###
+# @name personnelCreate
+post {{baseUrl}}/personels
+Content-Type: application/json
+
+{
+  "userName": "leadUser03",
+  "firstName": "Lead03",
+  "lastName": "Manager03",
+  "departmentId": "6a01d2fa06a9fe7af549d257",
+  "title": "Team Lead03",
+  "email": "lead03@test.com",
+  "password": "1234",
+  "description": "Lead user for testing",
+  "phone": "+901111111112",
+  "salary": {
+    "amount": 7040,
+    "currency": "TRY"
+  },
+  "role": "lead",
+  "permissions": {
+    "canEdit": true,
+    "canDelete": false,
+    "canCreate": true,
+    "canView": true
+  },
+  "isActive": true,
+  "startedAt": "2026-05-12T00:00:00.000Z"
+}

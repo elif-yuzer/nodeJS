@@ -8,7 +8,8 @@ const app = express();
 const PORT = process.env.PORT ?? 3500;
 
 app.use(express.json());
-app.use(require("./src/middlewares/queryHandler")); // gelen bytleri stringe cevirir json formatta
+app.use(require("./src/middlewares/queryHandler"));
+app.use(require("./src/middlewares/authentication"));
 
 app.all("/", (req, res) => {
   res.send({
@@ -16,6 +17,8 @@ app.all("/", (req, res) => {
   });
 });
 
+app.use("/auth", require("./src/routes/authRoute"));
+app.use("/tokens", require("./src/routes/tokenRoute"));
 app.use("/departments", require("./src/routes/departmentRoute"));
 app.use("/personels", require("./src/routes/personelRoute"));
 

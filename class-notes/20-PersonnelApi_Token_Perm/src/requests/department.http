@@ -24,11 +24,12 @@ Content-Type: application/json
 ###
 
 # @name departmentUpdate
-put {{baseUrl}}/departments/6a038839d2b39772287ec25e
+put {{baseUrl}}/departments/6a01d2fa06a9fe7af549d257
+Authorization:Token c2febef74d0e68eb67cbfa7c1d057d2efe9df84261178270aaa51f0d6afbfe11
 Content-Type: application/json
 
 {
-    "name": "department guncellendi 2.kez"
+    "name": "lead is updating own department.."
 }
 ###
 # @name departmentDelete
