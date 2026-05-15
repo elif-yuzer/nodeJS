@@ -10,7 +10,7 @@ post {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "userName": "leaduser03",
+    "userName": "elif",
     "password": "1234"
 }
 ###
@@ -20,7 +20,7 @@ GET http://127.0.0.1:8000/departments
 
 # @name logout
 post {{baseUrl}}/auth/logout
-Authorization: Token c7dedd0a4ef5ace5f41ec940d52ceb20208974cdef1fedd1e609e447c9ea74a7
+Authorization: Token 8d2d68e81cf807ca63a118139ba153398fcbc9e695b0880e6ea607dbe792e526
 
 
 

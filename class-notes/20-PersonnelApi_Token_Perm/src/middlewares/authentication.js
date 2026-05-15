@@ -16,6 +16,8 @@ const authMiddleware = async (req, res, next) => {
       .populate("userId")
       .lean();
     if (tokenData) req.user = tokenData.userId;
+    console.log("tokenData:", tokenData);
+    console.log("req.user:", tokenData?.userId);
   }
 
   next();
