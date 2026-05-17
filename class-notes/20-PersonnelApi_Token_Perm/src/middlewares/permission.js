@@ -1,5 +1,5 @@
 "use strict";
-const personelModel = require("../models/personelModel");
+const Personel = require("../models/personelModel");
 const { CustomError } = require("../utils/index");
 
 const isAuthenticated = (req) => req.user && req.user?.isActive;

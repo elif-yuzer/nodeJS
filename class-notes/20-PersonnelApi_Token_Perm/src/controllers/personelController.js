@@ -54,10 +54,11 @@ module.exports = {
     });
   },
   update: async (req, res) => {
+    console.log(req.params);
     if (req.body.role) {
       throw new CustomError("Role cannot be changed", 403);
     }
-    const data = await Personel.findByIdAndUpdate(req.params.id, req.body, {
+    const data = await Personel.findByIdAndUpdate(req.params._id, req.body, {
       new: true,
     });
     if (!data) throw new CustomError("Data is not found", 404);

@@ -1,0 +1,11 @@
+# express
+PORT=8000
+
+# db
+MONGODB_URI=mongodb://127.0.0.1:27017/ch11-blog-api
+
+# pass encyrpte 
+SECRET_KEY = d4dfe25b5e9fcf40a9ca446d0341ba442dd85f79d05d6852c7ed8c05114b777a
+PASS_ITERATION = 100000
+PASS_KEYLEN = 32
+PAS_DIGEST = sha512

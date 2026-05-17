@@ -1,8 +1,9 @@
 "use strict";
 
-const {mongoose }= require("../configs/dbConncetion");
-const { passwordEncrypte } = require("../utils/index");
-const personelSchema = new mongoose.Schema(
+const { mongoose } = require("../configs/db.connection");
+const { passwordEncrypte } = require("../utils");
+
+const personnelSchema = new mongoose.Schema(
   {
     departmentId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -10,19 +11,20 @@ const personelSchema = new mongoose.Schema(
       required: true,
     },
 
-    userName: {
+    username: {
       type: String,
       trim: true,
       required: true,
       unique: true,
-      lowercase: true,
     },
+
     password: {
       type: String,
+      trim: true,
       required: true,
-      select: false,
       set: passwordEncrypte,
     },
+
     firstName: {
       type: String,
       trim: true,
@@ -34,21 +36,26 @@ const personelSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+
     phone: {
       type: String,
-      required: true,
-      match: [/^\+?[0-9]{10,15}$/, "Invalid phone number."],
-    },
-    email: {
-      type: String,
+      trim: true,
       required: true,
       unique: true,
-      lowercase: true,
+      match: [/^\d{11}$/, "Invalid phone number."],
+    },
+
+    email: {
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
       match: [
         /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/,
         "Invalid email address.",
       ],
     },
+
     title: {
       type: String,
       trim: true,
@@ -56,8 +63,8 @@ const personelSchema = new mongoose.Schema(
     },
 
     salary: {
-      amount: Number,
-      currency: String,
+      type: Number,
+      default: 0,
     },
 
     description: {
@@ -65,44 +72,28 @@ const personelSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+
     isActive: {
       type: Boolean,
       default: true,
     },
 
-    role: {
-      type: String,
-      enum: ["employee", "lead", "admin"],
-      default: "employee",
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
 
-    //permission 
-    permissions: {
-      canEdit: {
-        type: Boolean,
-        default: false,
-      },
-      canDelete: {
-        type: Boolean,
-        default: false,
-      },
-      canCreate: {
-        type: Boolean,
-        default: false,
-      },
-      canView: {
-        type: Boolean,
-        default: true,
-      },
+    isLead: {
+      type: Boolean,
+      default: false,
     },
 
     startedAt: {
       type: Date,
-      //default:Date.now()  //
-      default: Date.now,
-    },
+      default: Date.now(),
+    }
   },
-  { collection: "Personel", timestamps: true },
+  { collection: "personnels", timestamps: true },
 );
 
-module.exports = mongoose.model("Personel", personelSchema);
+module.exports = mongoose.model('Personnel', personnelSchema);

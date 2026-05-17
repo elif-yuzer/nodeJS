@@ -20,7 +20,7 @@ GET http://127.0.0.1:8000/departments
 
 # @name logout
 post {{baseUrl}}/auth/logout
-Authorization: Token 8d2d68e81cf807ca63a118139ba153398fcbc9e695b0880e6ea607dbe792e526
+Authorization: Token 059ce32e6f6737a3a7c45a67f09e772e44db7c2f34c3707f1bac37746145d961
 
 
 

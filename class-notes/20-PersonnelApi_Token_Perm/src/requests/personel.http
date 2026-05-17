@@ -59,19 +59,19 @@ get {{baseUrl}}/personels?userName=elif
 ###
 
 # @name personnelUpdate
-put {{baseUrl}}/personels/6a039d0f9e50dec6416a9a35
+put {{baseUrl}}/personels/6a0628958f2be64ff4d47958
 Content-Type: application/json
-Authorization: Token 8d2d68e81cf807ca63a118139ba153398fcbc9e695b0880e6ea607dbe792e526
+Authorization: Token 9ed5b344fa8dde6302fabc3aae30f3490a7e83e816d865aaf89c59dec125996e
 
 {
-    "password": "12345"
+    "password": "1234"
 }
 
 
 ###
 
 # @name personnelDelete
-delete {{baseUrl}}/personels/6a0628958f2be64ff4d47958
+delete {{baseUrl}}/personels/6a03a38ca49f07ec5f7167a8
 Authorization: Token 059ce32e6f6737a3a7c45a67f09e772e44db7c2f34c3707f1bac37746145d961
 
 
