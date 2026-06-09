@@ -38,14 +38,63 @@ app.use(require("./src/middlewares/logger"));
 /* ------------------------------------------------------- */
 //E mail
 //$ npm i nodemailer
-const nodemailer=require('nodemailer')
+const nodemailer = require("nodemailer");
 
 //send email with ethereal(fake) email
 //create test account
-nodemailer.createTestAccount().then((email)=>console.log(email));
+//nodemailer.createTestAccount().then((email) => console.log(email));
+/*  pass: 'EayTcKvGfxZmf4v2cP',
+  smtp: { host: 'smtp.ethereal.email', port: 587, secure: false },
+  imap: { host: 'imap.ethereal.email', port: 993, secure: true },
+  pop3: { host: 'pop3.ethereal.email', port: 995, secure: true },
+  web: 'https://ethereal.email',
+  mxEnabled: false
+}
+ */
 
+/* nodemailer.createTestAccount().then((account) => {
+  const transporter = nodemailer.createTransport({
+    host: account.smtp.host,
+    port: account.smtp.port,
+    secure: account.smtp.secure,
+    auth: {
+      user: account.user, // createTestAccount'tan gelen user
+      pass: account.pass, // createTestAccount'tan gelen pass
+    },
+  });
 
-/* ------------------------------------------------------- */
+  transporter.sendMail(
+    {
+      from: account.user,
+      to: "info@ondiaacademy.com",
+      subject: "hei",
+      text: "hello there this is a test email.",
+      html: "<p><b>Hello there,</b></p>",
+    },
+    (error, success) => {
+      success ? console.log(success, "basarılı") : console.log(error, "hataa");
+    },
+  );
+}); */
+/* const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "elifyuzer12@gmail.com",
+    pass: "gwmx gjme jeca owpa",
+  },
+});
+
+transporter.sendMail(
+  {
+    from: "perihankoyun545@gmail.com",
+    to: "elifyuzer12@gmail.com",
+    text: "hello there this is a test email.",
+    html: "<p><b>Hello there,</b></p>",
+  },
+  (error, success) => {
+    success ? console.log(success, "basarılı") : console.log(error, "hataa");
+  },
+); */
 
 //* Routes:
 
