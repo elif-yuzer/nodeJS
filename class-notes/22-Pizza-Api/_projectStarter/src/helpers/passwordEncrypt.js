@@ -1,6 +1,8 @@
 "use strict";
 
-const crypto = require("node:crypto"),
+const crypto = require("node:crypto")
+
+const { pbkdf2Sync } = require("node:crypto");
   
 const passwordEncrypt=function(password){
  const salt = process.env.SECRET_KEY;
@@ -21,4 +23,4 @@ const passwordEncrypt=function(password){
     }
   }
 
-  modules.exports={passwordEncrypt,CustomError}
+  module.exports={passwordEncrypt,CustomError}

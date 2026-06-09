@@ -1,0 +1,89 @@
+@baseUrl = http://127.0.0.1:5000
+
+### 1. Ana sayfa (public)
+# @name home
+GET {{baseUrl}}
+
+###
+
+### 2. Login (public)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "testuser6@test.com",
+    "password": "1234"
+}
+
+###
+
+### 3. Kullanıcı oluştur (public — kayıt)
+# @name userCreate
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "username": "testuser6",
+    "email": "testuser6@test.com",
+    "password": "1234",
+    "isAdmin": false
+}
+
+###
+
+### 4. Token OLMADAN users — 401 gelmeli
+GET {{baseUrl}}/users
+
+###
+
+### 5. Token İLE users listesi — 200 gelmeli
+# @name getUsers
+GET {{baseUrl}}/users
+Authorization: Bearer {{login.response.body.accessToken}}
+
+###
+
+### 6. Tek kullanıcı getir
+GET {{baseUrl}}/users/{{login.response.body.user._id}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+###
+
+### 7. Kullanıcı güncelle
+PUT {{baseUrl}}/users/{{login.response.body.user._id}}
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.accessToken}}
+
+{
+    "username": "adminUpdated"
+}
+
+###
+
+### 8. Kullanıcı sil (admin yetkisi gerekli)
+DELETE {{baseUrl}}/users/{{login.response.body.user._id}}
+Authorization: Bearer {{login.response.body.accessToken}}
+
+###
+
+### 9. Logout
+# @name logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{login.response.body.accessToken}}
+
+###
+
+### 10. Logout sonrası token ile istek — hala 200 mu? (refresh token test)
+GET {{baseUrl}}/users
+Authorization: Bearer {{login.response.body.accessToken}}
+
+###
+
+post {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTBkMmM3Yjg3ZTY2OTVlZjg4NGI0NjciLCJpYXQiOjE3ODA5ODY4OTYsImV4cCI6MTc4MTA3MzI5Nn0.DGBZ2NvByfyCDQn_gIfRFMPlw_d1j_9R1FKQzK8F8G"
+}

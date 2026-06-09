@@ -1,4 +1,10 @@
-const { mongoose } = require("mongoose");
+"use strict";
+/* -------------------------------------------------------
+    | FULLSTACK TEAM | NODEJS / EXPRESS |
+------------------------------------------------------- */
+const mongoose = require("mongoose")
+const {passwordEncrypt} = require("../helpers/passwordEncrypt");
+/* ------------------------------------------------------- */
 
 const userSchema = new mongoose.Schema(
   {
@@ -7,14 +13,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: true,
       unique: true,
-      lowercase: true,
     },
+
     password: {
       type: String,
+      trim: true,
       required: true,
-      select: false,
+      select:false,
       set: passwordEncrypt,
     },
+
     email: {
       type: String,
       required: true,
@@ -25,15 +33,18 @@ const userSchema = new mongoose.Schema(
         "Invalid email address.",
       ],
     },
+
     isActive: {
       type: Boolean,
       default: true,
     },
-    isAdmin:{
-        type:Boolean,
-        default:false
-    }
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { collection: "User", timestamps: true },
+  { collection: "users", timestamps: true },
 );
+
+
 module.exports = mongoose.model("User", userSchema);
