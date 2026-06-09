@@ -1,4 +1,6 @@
 "use strict";
+const { welcomeTemplate } = require("../helpers/emailTemp");
+const sendMail = require("../helpers/sendMail");
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
@@ -37,6 +39,12 @@ module.exports = {
         */
 
     const result = await User.create(req.body);
+
+    sendMail(
+      result.email,
+      "Welcome",
+      welcomeTemplate({username:result.username,email:result.email})
+    );
 
     res.status(201).send({
       error: false,

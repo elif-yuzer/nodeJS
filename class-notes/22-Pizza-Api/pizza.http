@@ -24,8 +24,8 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-    "username": "testuser6",
-    "email": "testuser6@test.com",
+    "username": "elif",
+    "email": "elifyuzer12@gmail.com",
     "password": "1234",
     "isAdmin": false
 }

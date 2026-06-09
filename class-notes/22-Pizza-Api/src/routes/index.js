@@ -18,7 +18,7 @@ const { verifyJWT } = require("../middlewares/authentication")
 router.use('/auth', require('./auth'))
 // user:
 //*burda bir protected yapı olusturdm yanı kullanıcı gırıs yaptıktan sonra get post delete vs işlmelerini yapabilecek
-router.use('/users', verifyJWT, require('./user'))
+router.use('/users',  require('./user'))
 // token:
 
 
