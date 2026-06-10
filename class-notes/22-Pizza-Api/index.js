@@ -115,6 +115,9 @@ app.all("/", (req, res) => {
 // Other path
 app.use("/", require("./src/routes/"));
 
+//Static route
+app.use('/uploads',express.static('./src/uploads'))
+
 /* ------------------------------------------------------- */
 //* Error Handlers
 

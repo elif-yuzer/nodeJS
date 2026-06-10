@@ -27,7 +27,7 @@ router.use('/orders',verifyJWT, require('./order'))
 // pizza:
 router.use('/pizzas',verifyJWT, require('./pizza'))
 // topping:
-router.use('/toppings',verifyJWT, require('./topping'))
+router.use('/toppings', require('./topping'))
 
 // document:
 router.use('/documents',verifyJWT, require('./document'))

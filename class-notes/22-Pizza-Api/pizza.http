@@ -87,3 +87,68 @@ Content-Type: application/json
 {
     "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTBkMmM3Yjg3ZTY2OTVlZjg4NGI0NjciLCJpYXQiOjE3ODA5ODY4OTYsImV4cCI6MTc4MTA3MzI5Nn0.DGBZ2NvByfyCDQn_gIfRFMPlw_d1j_9R1FKQzK8F8G"
 }
+###
+# @name toppingRead
+get {{baseUrl}}/toppings/
+
+###
+
+# @name toppingCreate
+post {{baseUrl}}/toppings
+Content-Type: application/json
+
+{
+    "name": "topping-1"
+}
+
+###
+# @name toppingUpdate
+put {{baseUrl}}/toppings/69f86c482265bbd9fe6122eb
+Content-Type: application/json
+
+{
+    "name": "user abc"
+}
+
+
+
+# @name toppingDelete
+delete {{baseUrl}}/toppings/69f86bf22265bbd9fe6122e9
+
+###
+
+# @name pizzaList
+get {{baseUrl}}/pizzas/
+
+###
+
+# @name pizzaRead
+get {{baseUrl}}/pizzas/69f86c482265bbd9fe6122eb
+
+###
+
+# @name pizzaCreate
+post {{baseUrl}}/pizzas
+Content-Type: application/json
+
+{
+    "name": "pizza-A",
+    "image": "example-pizza.jpg",
+    "price": 20,
+    "toppingIds": ["6a0ae6d67ec7172fbfdb04c1","6a0ae6e37ec7172fbfdb04c3"]
+}
+
+###
+
+# @name pizzaUpdate
+put {{baseUrl}}/pizzas/6a0ae8127ec7172fbfdb04c4
+Content-Type: application/json
+
+{
+    "name": "pizza-abcdfghj"
+}
+
+###
+
+# @name pizzaDelete
+delete {{baseUrl}}/pizzas/69f86bf22265bbd9fe6122e9
