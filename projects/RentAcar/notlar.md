@@ -1,0 +1,1 @@
+En karmaşık veya en çok ilişkisi olan modelden başlamak yapılan en büyük mimari hatalardan biridir. Bunun yerine yazılım dünyasında "Aşağıdan Yukarıya" (Bottom-Up) veya "Bağımsızdan Bağımlıya" kuralı izlenir.
