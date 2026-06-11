@@ -47,6 +47,29 @@ app.all("/", (req, res) => {
 });
 
 /*//*routes  */
+app.all("/", (req, res) => {
+  res.send({
+    error: false,
+    message: "Welcome to RENT A CAR API",
+    documents: {
+      swagger: "/document/swagger",
+      redoc: "/document/redoc",
+      json: "/document/json",
+    },
+    user: req.user,
+  });
+});
+
+// Routes:
+app.use(require("./src/routes"));
+
+// not Found
+app.all("/*splat", async (req, res) => {
+  res.status(404).send({
+    error: true,
+    message: "Route not available",
+  });
+});
 
 
 

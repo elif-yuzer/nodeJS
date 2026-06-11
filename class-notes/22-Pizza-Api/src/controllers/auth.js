@@ -96,7 +96,7 @@ module.exports = {
           error: false,
           bearer: { access },
         });
-        next()
+        
       },
     );
   },

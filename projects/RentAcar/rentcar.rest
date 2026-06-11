@@ -1,0 +1,38 @@
+@baseUrl = http://127.0.0.1:3500
+
+### Ana sayfa public 
+# @name home
+
+GET {{baseUrl}}
+
+
+### Register
+
+# @name register
+
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser3",
+  "email": "testuser3@mail.com",
+  "password": "Test1234455!",
+  "isAdmin" : true
+}
+### login
+# @name userlogin
+
+
+post {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "testuser3",
+    "password": "Test1234455!"
+}
+
+###
+# @name logout
+get {{baseUrl}}/auth/logout
+Authorization: {{accessToken}}
+

@@ -51,5 +51,7 @@ const Car = new mongoose.Schema(
 );
 
 carSchema.plugin(uniqueValidator) , {
-    
+    message: 'This {PATH} is already exist'
 }
+
+module.exports=mongoose.model('Car',carSchema)
