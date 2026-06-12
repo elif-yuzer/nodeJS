@@ -10,6 +10,7 @@ const router = require("express").Router();
 
 // auth:
 router.use("/auth", require("./authRoute"));
+router.use("/users", require("./userRoute"));
 
 /* ------------------------------------------------------- */
 module.exports = router;

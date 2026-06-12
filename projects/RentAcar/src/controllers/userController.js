@@ -7,7 +7,7 @@
 // User Controller:
 
 const User = require("../models/userModel");
-const passwordValidation = require("../helpers/passwordValidation");
+
 
 module.exports = {
   list: async (req, res) => {
@@ -33,7 +33,7 @@ module.exports = {
     });
   },
 
-  read: async (req, res) => {
+  getUserProfile: async (req, res) => {
     /*
       #swagger.tags = ["Users"]
       #swagger.summary = "Get Single User"
@@ -41,7 +41,7 @@ module.exports = {
 
     //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
 
-    const data = await User.findOne({ _id: req.params.id });
+    const data = await User.findOne({ _id: req.user._id });
 
     res.status(200).send({
       error: false,

@@ -1,4 +1,5 @@
 @baseUrl = http://127.0.0.1:3500
+@accessToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTJhYzc5ZmIyZjMzZjYwOGQ0NTUyZWYiLCJ1c2VybmFtZSI6InRlc3R1c2VyMyIsImlzQWN0aXZlIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3ODEyMjkyMzAsImV4cCI6MTc4MTIyOTgzMH0.xGi9zhR9JsPezMoVq-eS3ybPVop0kAexCT_Uj-KeyXA
 
 ### Ana sayfa public 
 # @name home
@@ -14,10 +15,12 @@ POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "username": "testuser3",
-  "email": "testuser3@mail.com",
-  "password": "Test1234455!",
-  "isAdmin" : true
+  "username": "testuser7",
+  "email": "testuser7@mail.com",
+  "password": "Test123445567!",
+  "isAdmin" : false,
+  "isActive":false
+  
 }
 ### login
 # @name userlogin
@@ -27,12 +30,33 @@ post {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "testuser3",
-    "password": "Test1234455!"
+    "username": "testuser7",
+    "password": "Test123445567!"
 }
 
 ###
 # @name logout
 get {{baseUrl}}/auth/logout
 Authorization: {{accessToken}}
+
+
+
+
+
+###
+# @name getProfile
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{accessToken}}
+
+###
+# @name senaryo 2 token yok
+GET {{baseUrl}}/users/profile
+
+###  SENARYO 3: Geçersiz token
+GET {{baseUrl}}/users/profile
+Authorization: Bearer invalid.token.123
+
+
+
+###  SENARYO 4: İnaktif kullanıcı (isActive: false)
 
