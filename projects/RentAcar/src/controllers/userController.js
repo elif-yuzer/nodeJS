@@ -1,6 +1,6 @@
-'use strict'
+"use strict";
 
-
+const CustomError = require("../helpers/customError");
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
@@ -8,39 +8,18 @@
 
 const User = require("../models/userModel");
 
-
 module.exports = {
   list: async (req, res) => {
-    /*
-      #swagger.tags = ["Users"]
-      #swagger.summary = "List Users"
-      #swagger.description = `
-        You can send query with endpoint for search[], sort[], page and limit.
-        <ul> Examples:
-            <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>
-            <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>
-            <li>URL/?<b>page=2&limit=1</b></li>
-        </ul>
-      `
-    */
-
-    const data = await res.getModelList(User);
+    const result = await res.getModelList(User);
 
     res.status(200).send({
       error: false,
       details: await res.getModelListDetails(User),
-      data,
+      result,
     });
   },
 
   getUserProfile: async (req, res) => {
-    /*
-      #swagger.tags = ["Users"]
-      #swagger.summary = "Get Single User"
-    */
-
-    //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
-
     const data = await User.findOne({ _id: req.user._id });
 
     res.status(200).send({
@@ -50,26 +29,25 @@ module.exports = {
   },
 
   update: async (req, res) => {
-    /*
-      #swagger.tags = ["Users"]
-      #swagger.summary = "Update User"
-      #swagger.parameters['body'] = {
-        in: 'body',
-        required: true,
-        schema: {
-            "username": "test",
-            "password": "1234",
-            "email": "test@site.com",
-            "isActive": true,
-            "isStaff": false,
-            "isAdmin": false,
-        }
-      }
-    */
+    // Admin değilse güvenlik alanlarını sil
+    if (!req.user.isAdmin && req.params.id !== req.user._id.toString()) {
+      throw new CustomError("You can only update your own account", 403);
+    }
+    if (!req.user.isAdmin) {
+      delete req.body.isAdmin;
+      delete req.body.isStaff;
+      delete req.body.isActive;
+    }
 
-    //? Yetkisiz kullanıcının başka bir kullanıcıyı yönetmesini engelle (sadece kendi verileri):
+    console.log(req.user)
 
-    const data = await User.findByIdAndUpdatey(req.params.id, req.body, { runValidators: true, new: true });
+    // Admin ise URL'deki id'yi, değilse kendi id'sini kullan
+    const _id = req.user.isAdmin ? req.params.id : req.user._id;
+
+    const data = await User.findByIdAndUpdate(_id, req.body, {
+      runValidators: true,
+      returnDocument: "after",
+    });
 
     res.status(202).send({
       error: false,
@@ -77,11 +55,14 @@ module.exports = {
     });
   },
 
-  delete: async (req, res) => {
-    /*
-        #swagger.tags = ["Users"]
-        #swagger.summary = "Delete User"
-    */
+  deletee: async (req, res) => {
+    // Sadece admin silebilir veya kullanıcı kendini
+    if (!req.user.isAdmin && req.user._id.toString() !== req.params.id) {
+      return res.status(403).send({
+        error: true,
+        message: "Forbidden: You can only delete your own account",
+      });
+    }
 
     const data = await User.deleteOne({ _id: req.params.id });
 

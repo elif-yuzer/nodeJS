@@ -11,6 +11,7 @@ const router = require("express").Router();
 // auth:
 router.use("/auth", require("./authRoute"));
 router.use("/users", require("./userRoute"));
+router.use("/cars", require("./carRoute"));
 
 /* ------------------------------------------------------- */
 module.exports = router;

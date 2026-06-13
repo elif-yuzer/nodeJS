@@ -1,7 +1,8 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require("mongoose");
+const { default: uniqueValidator } = require("mongoose-unique-validator");
 const { type } = require("node:os");
 
-const Car = new mongoose.Schema(
+const carSchema = new mongoose.Schema(
   {
     plateNumber: {
       type: String,
@@ -24,12 +25,13 @@ const Car = new mongoose.Schema(
       required: true,
       //min olması gerekmezmi
 
-      min: new Date().getFullYear(),
-      validate:{
-        validator:function(value){
-            return values<=new Date.getFullYear()
-        }
-      }
+      min: 1900,
+      validate: {
+        validator: function (value) {
+          return value <= new Date().getFullYear();
+        },
+        message: "Year must be between 1900 and current year",
+      },
     },
     isAutomatic: {
       type: Boolean,
@@ -46,12 +48,29 @@ const Car = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    images: {
+      type: [String],
+      default: [],
+    },
+
+    createdId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    updatedId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  { collection: Car, timestamps: true },
+  { collection: "cars", timestamps: true },
 );
 
-carSchema.plugin(uniqueValidator) , {
-    message: 'This {PATH} is already exist'
-}
+(carSchema.plugin(uniqueValidator),
+  {
+    message: "This {PATH} is already exist",
+  });
 
-module.exports=mongoose.model('Car',carSchema)
+module.exports = mongoose.model("Car", carSchema);

@@ -1,17 +1,25 @@
 const CustomError = require("../helpers/customError");
- 
+
 const isAuthenticated = (req) => req.user && req.user?.isActive;
- 
+
 const deny = (message) => {
   throw new CustomError(`NoPermission: ${message}`, 401);
 };
- 
-// ── PERMISSIONS TABLOSU ────────────────────────────────────────────────────
+
+
 const PERMISSIONS = {
-  "user:readSelf": { isActive: true },      // Kendi profili: aktif olması yeterli
-  "user:readOther": { isAdmin: true },      // Başka birinin profili: admin olmalı
-  "user:readAll": { isAdmin: true },        // Tüm kullanıcılar: admin olmalı
+  "user:readSelf": { isActive: true },
+  "user:readOther": { isAdmin: true },
+  "user:readAll": { isAdmin: true },
+  "user:updateSelf":{isActive:true},
+
+
+  //*cars için
+  "car:readAll":{isActive:true}, //!herkes kiralasın
+  "car:create":{isAdmin:true}  , //!sadece admin create etsin
+  "car:update":{isAdmin:true},
+  "car:delete":{isAdmin:true},
+  "car:availablecar":{isPublish:true}
 };
- 
+
 module.exports = PERMISSIONS;
- 

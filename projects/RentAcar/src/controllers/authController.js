@@ -1,6 +1,6 @@
 "use strict";
 
-const { CustomError } = require("../helpers/customError");
+const  CustomError  = require("../helpers/customError");
 const comparePassword = require("../helpers/passwordCompare");
 const {
   generateAccesstoken,

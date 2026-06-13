@@ -29,7 +29,7 @@ app.use(express.json());
 //app.use(require("./src/middlewares/logger"));
 
 // Query Handler
-//app.use(require("./src/middlewares/queryHandler"));
+app.use(require("./src/middlewares/queryHandler"));
 
 
 // HomePath:

@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const CustomError = require("../helpers/customError");
 const PERMISSIONS = require("./permissions");
 
-
 const verifyJWT = async (req, res, next) => {
   //*kullanıcı dolu gelse bıle burda bos bir etiketle baska birinin yaka kartını takmıs bıle olsa burda onu engellıyorm
   //*kapıdakı guvenlık gorevlısının tek gorevi var bu kısı kım?
@@ -22,6 +21,8 @@ const verifyJWT = async (req, res, next) => {
   //*saf tokenı aldım sımdı tokenı elımdekı token ıle kıyaslayıp env dekı dıcem bu kısı budur yakasına kartı takıcm
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, decoded) => {
+      console.log("JWT ERROR:", error);      // ← ekle
+    console.log("DECODED:", decoded);      // ← ekle
     //*bu error jwt ye ait ama js den extend almıs
     if (error) {
       if (error.name === "TokenExpiredError") {
@@ -44,6 +45,10 @@ const verifyJWT = async (req, res, next) => {
 const authorize = (permission) => {
   return (req, res, next) => {
     //gırıs yapılmısmı yapılmadıysa hata fırlat
+
+    console.log("req.user:", req.user); // ← ekle
+    console.log("permission:", permission); // ← ekle
+    console.log("rule:", PERMISSIONS[permission]); // ← ekle
     if (!req.user) {
       return next(new CustomError("Authentication required", 401));
     }

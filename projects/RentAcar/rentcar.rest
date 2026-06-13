@@ -1,5 +1,5 @@
 @baseUrl = http://127.0.0.1:3500
-@accessToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTJhYzc5ZmIyZjMzZjYwOGQ0NTUyZWYiLCJ1c2VybmFtZSI6InRlc3R1c2VyMyIsImlzQWN0aXZlIjp0cnVlLCJpc0FkbWluIjp0cnVlLCJpYXQiOjE3ODEyMjkyMzAsImV4cCI6MTc4MTIyOTgzMH0.xGi9zhR9JsPezMoVq-eS3ybPVop0kAexCT_Uj-KeyXA
+@accessToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTJkNmJkZGMwZWM2MzVkOTUyMDkwMjYiLCJ1c2VybmFtZSI6InVzZXJlZG9zIiwiaXNBY3RpdmUiOnRydWUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3ODEzNjMyNTAsImV4cCI6MTc4MTM2Njg1MH0.e8ji5A_DFwE1uBXkFPavy01XjDHw2EyzfDl2o2FPLIg
 
 ### Ana sayfa public 
 # @name home
@@ -15,11 +15,11 @@ POST {{baseUrl}}/auth/register
 Content-Type: application/json
 
 {
-  "username": "testuser7",
-  "email": "testuser7@mail.com",
-  "password": "Test123445567!",
-  "isAdmin" : false,
-  "isActive":false
+  "username": "adminedos",
+  "email": "adminedos@mail.com",
+  "password": "Adminedos4321!",
+  "isAdmin" : true,
+  "isActive":true
   
 }
 ### login
@@ -30,8 +30,8 @@ post {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "username": "testuser7",
-    "password": "Test123445567!"
+    "username": "useredos",
+    "password": "Useredos4321!"
 }
 
 ###
@@ -58,5 +58,90 @@ Authorization: Bearer invalid.token.123
 
 
 
-###  SENARYO 4: İnaktif kullanıcı (isActive: false)
+### admin listeler normal kullanıcı lısteleyemez
 
+# @name list
+GET {{baseUrl}}/users
+Authorization: Bearer {{accessToken}}
+
+###
+# @name guncelle
+
+PUT {{baseUrl}}/users/6a2c711a15d3bdf5b25144f0
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "password": "adminelif123456!"
+}
+
+
+### _____________________car controller testing____
+
+# @name carcreate via admin
+POST {{baseUrl}}/cars
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+#{
+  #"brand": "BMW",
+  #"model": "X5",
+  #"year": 1800,
+  #"plateNumber": "ABC123",
+  #"isAutomatic": true,
+  #"pricePerDay": 150,
+  #"isPublish": true
+#}
+#
+  #"brand": "Audi",
+  #"model": "A4",
+  #"year": 2024,
+  #"plateNumber": "AUD003",
+  #"isAutomatic": false,
+  #"pricePerDay": 120,
+  #"isPublish": false
+#
+
+{
+  "brand": "Audi",
+  "model": "A4",
+  "year": 2024,
+  "plateNumber": "AUD002",
+  "isAutomatic": false,
+  "pricePerDay": 120,
+  "isPublish": false
+}
+###
+
+
+
+### (Araçları listele)
+
+
+# @name getCars
+GET {{baseUrl}}/cars
+Authorization: Bearer {{accessToken}}
+
+###filter ile 
+# @nameurl e ekle sorguyu
+GET {{baseUrl}}/cars/?filter[isPublish]=true
+Authorization: Bearer {{accessToken}}
+
+
+###
+#GET {{baseUrl}}/cars?search[brand]=BMW
+#Authorization: Bearer {{{{accessToken}}}}
+
+
+
+### SORT: Fiyata göre (yüksekten düşüğe)
+#GET {{baseUrl}}/cars?sort[pricePerDay]=-1
+#Authorization: Bearer {{{{accessToken}}}}
+
+### PAGINATION: 2. sayfa, 5 araç
+#GET {{baseUrl}}/cars?page=2&limit=5
+##Authorization: Bearer {{{{accessToken}}}}
+
+### Filter + Search + Sort
+#GET {{baseUrl}}/cars?filter[isPublish]=true&search[brand]=BMW&sort[pricePerDay]=-1
+#Authorization: Bearer {{{{accessToken}}}}
