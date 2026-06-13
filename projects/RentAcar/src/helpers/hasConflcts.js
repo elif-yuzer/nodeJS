@@ -1,6 +1,8 @@
-export function hasConflicts (existing,requested){
-
-    return (
-        existing.start < requested.end && existing.end > requested.start
-    )
+function hasConflicts(existing, requested) {
+  return (
+    existing.startDate <= requested.endDate && 
+    existing.endDate >= requested.startDate
+  );
 }
+
+module.exports = hasConflicts;

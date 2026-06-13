@@ -1,5 +1,5 @@
 @baseUrl = http://127.0.0.1:3500
-@accessToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTJkNmJkZGMwZWM2MzVkOTUyMDkwMjYiLCJ1c2VybmFtZSI6InVzZXJlZG9zIiwiaXNBY3RpdmUiOnRydWUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3ODEzNjMyNTAsImV4cCI6MTc4MTM2Njg1MH0.e8ji5A_DFwE1uBXkFPavy01XjDHw2EyzfDl2o2FPLIg
+@accessToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2YTJkNmJkZGMwZWM2MzVkOTUyMDkwMjYiLCJ1c2VybmFtZSI6InVzZXJlZG9zIiwiaXNBY3RpdmUiOnRydWUsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3ODEzODcyNDcsImV4cCI6MTc4MTM5MDg0N30.m0ZaC9zmmz2ZHwABAoMD67Da2ZNbb1J78V1zZbMD3zU
 
 ### Ana sayfa public 
 # @name home
@@ -146,3 +146,17 @@ Authorization: Bearer {{accessToken}}
 #GET {{baseUrl}}/cars?filter[isPublish]=true&search[brand]=BMW&sort[pricePerDay]=-1
 #Authorization: Bearer {{{{accessToken}}}}
 
+###________reservaations testing_________
+
+###create new reservations
+
+# @name create reservation
+POST {{baseUrl}}/reservations
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "carId": "6a2d63b170f9265a9984856f",
+  "startDate": "2026-06-26",
+  "endDate": "2026-07-10"
+}

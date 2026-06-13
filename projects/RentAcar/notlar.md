@@ -301,3 +301,7 @@ Authorization: Bearer {{accessToken}}
 - bcrypt
 - mongoose-unique-validator
 - dotenv
+
+YAPILACAKLAR :
+car controllerin update delete e bak
+reservasyon mantıgını olusturdum

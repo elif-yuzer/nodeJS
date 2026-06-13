@@ -12,6 +12,7 @@ const router = require("express").Router();
 router.use("/auth", require("./authRoute"));
 router.use("/users", require("./userRoute"));
 router.use("/cars", require("./carRoute"));
+router.use("/reservations", require("./reservationRoute"));
 
 /* ------------------------------------------------------- */
 module.exports = router;

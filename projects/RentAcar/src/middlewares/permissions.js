@@ -13,13 +13,21 @@ const PERMISSIONS = {
   "user:readAll": { isAdmin: true },
   "user:updateSelf":{isActive:true},
 
-
-  //*cars için
-  "car:readAll":{isActive:true}, //!herkes kiralasın
-  "car:create":{isAdmin:true}  , //!sadece admin create etsin
+  //* cars için
+  "car:readAll":{isActive:true}, 
+  "car:create":{isAdmin:true},
   "car:update":{isAdmin:true},
   "car:delete":{isAdmin:true},
-  "car:availablecar":{isPublish:true}
+  "car:availablecar":{isPublish:true},
+
+  //* reservations için
+  "reservation:create":{isActive:true}, 
+  "reservation:listMy":{isActive:true},
+  "reservation:read":{isActive:true},
+  "reservation:cancel":{isActive:true},
+  "reservation:listAll":{isAdmin:true},
+  "reservation:updateStatus":{isAdmin:true},
+  "reservation:availableDates":{isAdmin:true},
 };
 
 module.exports = PERMISSIONS;
