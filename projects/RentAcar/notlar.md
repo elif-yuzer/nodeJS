@@ -1,47 +1,303 @@
-En karmaşık veya en çok ilişkisi olan modelden başlamak yapılan en büyük mimari hatalardan biridir. Bunun yerine yazılım dünyasında "Aşağıdan Yukarıya" (Bottom-Up) veya "Bağımsızdan Bağımlıya" kuralı izlenir.
+# 🚗 RentACar API
 
-match : regex onun işini validate yapıyor.
+Node.js / Express tabanlı araç kiralama REST API'si. JWT kimlik doğrulama, rol tabanlı yetkilendirme (RBAC) ve pagination/filter/search desteği içerir.
 
-endi kendine üye olabilmesi içindir. Herkese açıktır. Güvenlik görevlisi (Middleware) sormaz. Müşteri buraya gelip adını şifresini verir, sistem de onu kilerdeki (veritabanı) "Kullanıcılar" tablosuna kaydeder (Create yapar).
+---
 
-Arka Odadaki Yönetici Masası (User Controller -> create): Bu ise, restoran müdürünün (Admin) kendi eliyle sisteme yeni bir personel veya özel bir müşteri eklemesidir. Bu işlem "Güvenlik Korumalıdır" (Token gerektirir).
+## 📁 Proje Yapısı
 
-İşte bu yüzden önce Yönetici Masasını (user.js Controller) değil, Dış Kapıyı (auth.js Controller) inşa etmeliyiz. Test senaryomuz tam olarak şöyle işleyecek:
-**** 
-. İlk Tanışma ve Bilet Teslimi (Login Aşaması)
-Kullanıcı e-posta ve şifresiyle gişeye (Login) gelir. Kimliği doğrulanır. Sen (Sunucu) ona iki farklı bilet verirsin:
+```
+src/
+├── config/
+│   └── dbConnection.js
+├── controllers/
+│   ├── authController.js
+│   └── userController.js
+├── helpers/
+│   ├── customError.js
+│   ├── passwordCompare.js
+│   └── tokenHelper.js
+├── middlewares/
+│   ├── authentication.js   ← verifyJWT + authorize
+│   ├── errorHandler.js
+│   ├── permissions.js      ← RBAC permission tablosu
+│   └── queryHandler.js     ← filter/search/sort/pagination
+├── models/
+│   ├── carModel.js
+│   └── userModel.js
+└── routes/
+    ├── authRoute.js
+    ├── index.js
+    └── userRoute.js
+```
 
-Access Token (15 Dakika): Sistemin her yerinde geçerli olan asıl anahtardır.
+---
 
-Refresh Token (1 Gün): Sadece anahtarın süresi bittiğinde yenisini almak için kullanılan, yetkileri kısıtlı ama süresi uzun yedek anahtardır.
+## ⚙️ Kurulum
 
-2. Sistemi Kullanma Aşaması (Yetkilendirme)
-Kullanıcı, araba kiralama veya profil güncelleme gibi işlemleri yaparken her isteğinde (Request) o kısa süreli Access Token'ı kapıdaki Güvenlik Görevlisine (Middleware) gösterir. Güvenlik bu bileti onayladığı sürece kullanıcı işlemlerini rahatça yapar. Bu aşamada Refresh Token sessizce cepte/çerezde bekler.
+```bash
+# Bağımlılıkları yükle
+npm install
 
-3. Süre Aşımı (Expiration)
-Tam 15 dakika dolduğunda Access Token kendini imha eder (süresi dolar). Kullanıcı aynı biletle araba kiralamaya çalıştığında, kapıdaki Güvenlik Görevlisi ona "401 Unauthorized" (Geçersiz Bilet) hatası fırlatır ve kapıdan çevirir.
+# .env dosyasını oluştur
+cp .env.example .env
 
-4. Sessiz Yenileme (Refresh Aşaması)
-İşte zekice kısım burasıdır. Kullanıcı "401" hatası aldığında, akıllı bir mobil uygulama veya web sitesi (Frontend) kullanıcıya şifresini baştan sormaz! Arka planda sessizce Refresh Token'ı alır ve senin tasarlayacağın /refresh rotasına gönderir.
+# Sunucuyu başlat
+npm start
+```
 
-Senin Refresh rotan, bu uzun süreli bileti kontrol eder.
+### .env Değişkenleri
 
-Eğer bilet sağlamsa, kullanıcıya yepyeni bir 15 dakikalık Access Token üretip verir.
+```env
+PORT=3500
+DB_URI=mongodb://127.0.0.1:27017/rentAcar
 
-Mobil uygulama bu yeni bileti alır ve yarım kalan araba kiralama işlemine devam eder. Kullanıcı ruhu bile duymadan, şifre girmeden sistemi kullanmaya devam etmiş olur!
+ACCESS_TOKEN_SECRET=your_access_secret
+ACCESS_TOKEN_EXPIRE=10m
 
-İşte iki farklı token kullanılmasının temel nedeni, şifreleri sürekli ağ üzerinde taşıma riskini bitirmek ve güvenlik (kısa süre) ile kullanıcı deneyimini (sürekli şifre girmeme) aynı anda sağlamaktır.
+REFRESH_TOKEN_SECRET=your_refresh_secret
 
-Küçük Bir Mimari İpucu:
-Kodunda çok güzel bir şekilde tokenHelper.js dosyasından iki fonksiyonu süslü parantezlerle ihraç ettin: module.exports = { generateAccesstoken, generateRefreshtoken };
-Ancak controller sayfasında içeri alırken düz bir eşitleme yapmışsın: const generateAccesstoken = require(...). Bu durumda Node.js, generateRefreshtoken fonksiyonunu tanımayacak ve hata verecektir. Helper dosyasından içeri aktarım yaparken o çok sevdiğimiz Destructuring (Parçalama) yöntemini (yani süslü parantezleri) kullanmayı unutmamalısın.
+BCRYPT_SALT_ROUNDS=10
+```
 
-Şimdi bu login döngüsünü tamamlamak için geriye tek bir adımımız kaldı. Oluşturduğun bu iki yeni bileti (accessToken ve refreshToken) bizim o konuştuğumuz "Hibrit" stratejiye uygun olarak (Web için Cookie'ye, Mobil için JSON Body'sine koyarak) müşteriye başarı mesajıyla (200 OK) birlikte nasıl teslim edersin? 🚀
+---
 
-Güvenlik Zırhı: Çerez (Cookie) ayarlarına eklediğin httpOnly: true sayesinde dışarıdan gelebilecek XSS (kötü niyetli tarayıcı içi JavaScript) saldırılarını tamamen engelledin. secure: true ve sameSite: "None" ikilisiyle de biletin sadece güvenli (HTTPS) bağlantılarda taşınmasını garanti altına aldın.
+## 👥 Roller ve Yetkiler
 
-Mobil Uyumluluk: res.status(200).send({...}) tepsisinin içine hem accessToken ve refreshToken'ı hem de user bilgilerini doğrudan ekleyerek, bu API'yi gelecekte kullanacak mobil uygulama (React Native, Flutter) geliştiricilerine harika bir kolaylık sağladın. Mobil cihazlar bu JSON'u alıp kendi güvenli kasalarına rahatça kaydedebilecek.
+Sistemde 3 kullanıcı tipi vardır:
 
-***
+| Alan | Değer | Rol |
+|------|-------|-----|
+| isAdmin: true | - | Admin — her şeyi yapabilir |
+| isAdmin: false, isStaff: true | - | Staff — araç/rezervasyon yönetir |
+| isAdmin: false, isStaff: false | isActive: true | Müşteri — booking yapabilir |
 
-Bu yüzden register ve login işlemleri herkese açık (public) olmak zorundadır ve önlerine asla o yetkilendirme (Authentication) ara katmanı konmaz.
+### Permission Tablosu
+
+```javascript
+const PERMISSIONS = {
+  // Kullanıcı
+  "user:readSelf":    { isActive: true },   // herkes kendi profilini görebilir
+  "user:readOther":   { isAdmin: true },    // sadece admin başkasını görebilir
+  "user:readAll":     { isAdmin: true },    // sadece admin tüm listeyi görebilir
+  "user:updateSelf":  { isActive: true },   // herkes kendini güncelleyebilir
+  "user:delete":      { isAdmin: true },    // sadece admin silebilir
+
+  // Araç
+  "car:read":         { isActive: true },   // herkes görebilir
+  "car:create":       { isStaff: true },    // staff/admin ekleyebilir
+  "car:update":       { isStaff: true },    // staff/admin güncelleyebilir
+  "car:delete":       { isAdmin: true },    // sadece admin silebilir
+
+  // Kiralama
+  "rental:create":    { isActive: true },   // müşteri kiralayabilir
+  "rental:readOwn":   { isActive: true },   // kendi kiralamasını görebilir
+  "rental:readAll":   { isStaff: true },    // staff tüm kiralamaları görür
+  "rental:approve":   { isStaff: true },    // staff onaylayabilir
+  "rental:delete":    { isAdmin: true },    // sadece admin silebilir
+};
+```
+
+---
+
+## 🔐 Middleware Katmanları
+
+İstek akışı şu şekildedir:
+
+```
+İstek gelir
+    │
+    ▼
+verifyJWT        → "Bu kişi kim?" (token decode → req.user)
+    │
+    ▼
+authorize(perm)  → "Bu işlemi yapabilir mi?" (PERMISSIONS tablosu)
+    │
+    ▼
+queryHandler     → Filter/search/sort/pagination (opsiyonel)
+    │
+    ▼
+Controller       → DB işlemi + Response
+```
+
+### verifyJWT
+
+Token'ı doğrular ve `req.user`'a kullanıcı bilgilerini ekler:
+
+```javascript
+req.user = {
+  _id:     decoded._id,
+  isAdmin: decoded.isAdmin,
+  isStaff: decoded.isStaff,
+  isActive: decoded.isActive,
+}
+```
+
+### authorize(permission)
+
+Higher-order function — permission tablosuna göre erişimi kontrol eder. Admin her zaman bypass eder:
+
+```javascript
+router.get("/", verifyJWT, authorize("user:readAll"), list);
+```
+
+### queryHandler
+
+URL parametrelerinden filter/search/sort/pagination okur ve `res.getModelList` / `res.getModelListDetails` fonksiyonlarını `res`'e ekler:
+
+```javascript
+const result = await res.getModelList(User, customFilter);
+const details = await res.getModelListDetails(User, customFilter);
+```
+
+---
+
+## 🛣️ API Endpoints
+
+### Auth — `/auth`
+
+| Method | URL | Açıklama | Yetki |
+|--------|-----|----------|-------|
+| POST | `/auth/register` | Kayıt ol | Herkese açık |
+| POST | `/auth/login` | Giriş yap | Herkese açık |
+| GET | `/auth/logout` | Çıkış yap | Token gerekli |
+| POST | `/auth/refresh` | Token yenile | Refresh token gerekli |
+
+### Users — `/users`
+
+| Method | URL | Açıklama | Yetki |
+|--------|-----|----------|-------|
+| GET | `/users` | Tüm kullanıcıları listele | Admin |
+| GET | `/users/profile` | Kendi profilini gör | Aktif kullanıcı |
+| GET | `/users/:id` | Başka birinin profilini gör | Admin |
+| PUT | `/users/:id` | Kullanıcı güncelle | Aktif kullanıcı / Admin |
+| DELETE | `/users/:id` | Kullanıcı sil | Admin |
+
+### Cars — `/cars`
+
+| Method | URL | Açıklama | Yetki |
+|--------|-----|----------|-------|
+| GET | `/cars` | Araçları listele | Aktif kullanıcı |
+| GET | `/cars/:id` | Araç detayı | Aktif kullanıcı |
+| POST | `/cars` | Araç ekle | Staff / Admin |
+| PUT | `/cars/:id` | Araç güncelle | Staff / Admin |
+| DELETE | `/cars/:id` | Araç sil | Admin |
+
+### Rentals — `/rentals`
+
+| Method | URL | Açıklama | Yetki |
+|--------|-----|----------|-------|
+| POST | `/rentals` | Kiralama oluştur | Aktif kullanıcı |
+| GET | `/rentals/my` | Kendi kiralamalarım | Aktif kullanıcı |
+| GET | `/rentals` | Tüm kiralamalar | Staff / Admin |
+| PUT | `/rentals/:id/approve` | Kiralama onayla | Staff / Admin |
+| DELETE | `/rentals/:id` | Kiralama sil | Admin |
+
+---
+
+## 🔍 Query Parametreleri
+
+Listeleme endpoint'lerinde şu parametreler kullanılabilir:
+
+```
+# Filter (tam eşleşme)
+GET /cars?filter[isPublish]=true&filter[transmission]=automatic
+
+# Search (regex, büyük/küçük harf duyarsız)
+GET /cars?search[brand]=BMW&search[model]=series
+
+# Sort (1: artan, -1: azalan)
+GET /cars?sort[pricePerDay]=-1&sort[brand]=1
+
+# Pagination
+GET /cars?page=2&limit=5
+
+# Hepsi birlikte
+GET /cars?filter[isPublish]=true&search[brand]=BMW&sort[pricePerDay]=-1&page=1&limit=10
+```
+
+---
+
+## 🧪 REST Client Test Örnekleri
+
+```http
+@baseUrl = http://127.0.0.1:3500
+@accessToken = YOUR_TOKEN_HERE
+
+### Register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "test@mail.com",
+  "password": "Test1234!",
+  "isAdmin": false
+}
+
+###
+
+### Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "password": "Test1234!"
+}
+
+###
+
+### Kendi profilini gör
+GET {{baseUrl}}/users/profile
+Authorization: Bearer {{accessToken}}
+
+###
+
+### Tüm kullanıcıları listele (Admin)
+GET {{baseUrl}}/users
+Authorization: Bearer {{accessToken}}
+
+###
+
+### Kullanıcı güncelle
+PUT {{baseUrl}}/users/USER_ID_HERE
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "username": "yenikullaniciadi"
+}
+
+###
+
+### Araçları listele — filter + sort
+GET {{baseUrl}}/cars?filter[isPublish]=true&sort[pricePerDay]=-1
+Authorization: Bearer {{accessToken}}
+
+###
+
+### Araçları listele — pagination
+GET {{baseUrl}}/cars?page=2&limit=5
+Authorization: Bearer {{accessToken}}
+```
+
+---
+
+## ⚠️ Güvenlik Notları
+
+- Normal kullanıcı `update` endpoint'inde `isAdmin`, `isStaff`, `isActive` alanlarını değiştiremez — controller tarafında silinir.
+- Admin tüm kullanıcıları güncelleyebilir (`req.params.id`), normal kullanıcı sadece kendini (`req.user._id`).
+- Token süresi dolduğunda `401 Access token expired` hatası alınır — `/auth/refresh` ile yenilenmelidir.
+- `isActive: false` olan kullanıcılar `user:readSelf` gerektiren endpoint'lere erişemez.
+
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+- Node.js / Express
+- MongoDB / Mongoose
+- JSON Web Token (JWT)
+- bcrypt
+- mongoose-unique-validator
+- dotenv

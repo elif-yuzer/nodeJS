@@ -145,3 +145,4 @@ Authorization: Bearer {{accessToken}}
 ### Filter + Search + Sort
 #GET {{baseUrl}}/cars?filter[isPublish]=true&search[brand]=BMW&sort[pricePerDay]=-1
 #Authorization: Bearer {{{{accessToken}}}}
+
