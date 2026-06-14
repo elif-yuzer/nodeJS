@@ -15,10 +15,10 @@ const {
 
 // URL: /auth
 
-router.post("/login", login);
-router.post("/register", register);
-router.post("/refresh", refresh);
-router.get("/logout", logout);
+router.post("/login", login); //public
+router.post("/register", register);  //public
+router.post("/refresh", refresh);  //public
+router.get("/logout", logout);  //public
 
 /* ------------------------------------------------------- */
 module.exports = router;

@@ -46,9 +46,9 @@ const authorize = (permission) => {
   return (req, res, next) => {
     //gırıs yapılmısmı yapılmadıysa hata fırlat
 
-    console.log("req.user:", req.user); // ← ekle
-    console.log("permission:", permission); // ← ekle
-    console.log("rule:", PERMISSIONS[permission]); // ← ekle
+    console.log("req.user:", req.user); 
+    console.log("permission:", permission);
+    console.log("rule:", PERMISSIONS[permission]); 
     if (!req.user) {
       return next(new CustomError("Authentication required", 401));
     }
