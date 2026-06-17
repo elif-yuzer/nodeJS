@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 8001;
 // npm i ejs
 // https://ejs.co/
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
+
+//default template folder is 7.view
 
 /* ----------------------------------------------------- */
 // Middlewares:
@@ -25,15 +27,23 @@ app.use(express.json());
 /* ----------------------------------------------------- */
 // Routes:
 
-app.all('/', (req, res)=>{
-
+/* app.all("/", (req, res) => {
   // call ejs file in ./views
   // res.render('index.ejs')
-  res.render('index')
+  res.render("index");
+}); */
+
+app.all("/", (req, res) => {
+  res.send({
+    message: "Welcome to ExpressJS - TODO Project with Sequelize",
+    api: "BASE_URL/api/todos",
+    view: "BASE_URL/view",
+  });
 });
 
 // Todo route
 app.use("/api/todos", require("./src/routes/todoRouter"));
+app.use("/view", require("./src/routes/todoRouter.view"));
 
 // Not found route
 app.all("/*splat", (req, res) => {
