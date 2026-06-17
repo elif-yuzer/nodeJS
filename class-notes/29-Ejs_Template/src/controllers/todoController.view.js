@@ -1,10 +1,20 @@
 "use strict";
 const Todo = require("../models/todoModel");
 
+const PRIORITIES = {
+  "-1": "Low",
+  0: "Normal",
+  1: "High",
+};
+
 module.exports = {
   list: async (req, res) => {
     const todos = await Todo.findAndCountAll();
-    res.render("index", { count: todos.count, todolar: todos.rows });
+    res.render("index", {
+      count: todos.count,
+      todolar: todos.rows,
+      PRIORITIES,
+    });
   },
 
   create: async (req, res) => {
@@ -14,7 +24,7 @@ module.exports = {
 
   read: async (req, res) => {
     const todo = await Todo.findByPk(req.params.id);
-    res.render("detail", { todo });
+    res.render("TodoRead", { todo,PRIORITIES });
   },
 
   update: async (req, res) => {
@@ -29,7 +39,10 @@ module.exports = {
 
   toggle: async (req, res) => {
     const todo = await Todo.findByPk(req.params.id);
-    await Todo.update({ isDone: !todo.isDone }, { where: { id: req.params.id } });
+    await Todo.update(
+      { isDone: !todo.isDone },
+      { where: { id: req.params.id } },
+    );
     res.redirect("/view");
   },
 };
