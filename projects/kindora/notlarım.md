@@ -126,7 +126,7 @@ EMAIL_USER=yourmail@gmail.com
 EMAIL_PASS=yourAppPassword
 ```
 
-**✅ Test:** `GET /` → welcome mesajı dönüyor mu?
+** Test:** `GET /` → welcome mesajı dönüyor mu?
 
 ---
 
@@ -170,7 +170,7 @@ EMAIL_PASS=yourAppPassword
 }
 ```
 
-**⚠️ Güvenlik kuralı:** `isAdmin`, `role` body'den gelse bile **görmezden gel**:
+** Güvenlik kuralı:** `isAdmin`, `role` body'den gelse bile **görmezden gel**:
 ```js
 // authController.js register:
 const { username, firstName, lastName, email, password, location } = req.body;
@@ -178,7 +178,7 @@ const { username, firstName, lastName, email, password, location } = req.body;
 await User.create({ username, firstName, lastName, email, password, location });
 ```
 
-**✅ Test:** `POST /auth/register` → kullanıcı oluşuyor, şifre hashlenmiş mi?
+** Test:** `POST /auth/register` → kullanıcı oluşuyor, şifre hashlenmiş mi?
 
 ---
 
@@ -265,7 +265,7 @@ PATCH /auth/reset-password
 GET  /auth/verify-email
 ```
 
-**✅ Test:** Login → accessToken al → korumalı endpoint'e istek at → 401 mi 200 mi?
+** Test:** Login → accessToken al → korumalı endpoint'e istek at → 401 mi 200 mi?
 
 ---
 
@@ -322,7 +322,7 @@ GET   /auth/verify-email          → ?token=xxx ile doğrula
 POST  /auth/resend-verification   → doğrulama mailini tekrar gönder
 ```
 
-**✅ Test:** Register → mail geldi mi? Link çalışıyor mu? Şifre reset akışı tamamlandı mı?
+** Test:** Register → mail geldi mi? Link çalışıyor mu? Şifre reset akışı tamamlandı mı?
 
 ---
 
@@ -383,7 +383,7 @@ await user.save();
 }
 ```
 
-**✅ Test:** Admin login → `GET /admin/users` → tüm kullanıcılar listelenyor mu? Ban işlemi o kullanıcının session'ını kesiyor mu?
+** Test:** Admin login → `GET /admin/users` → tüm kullanıcılar listelenyor mu? Ban işlemi o kullanıcının session'ını kesiyor mu?
 
 ---
 
@@ -470,7 +470,7 @@ PUT  /admin/organizer-requests/:id/approve → onayla      (organizerRequest:app
 PUT  /admin/organizer-requests/:id/reject  → reddet      (organizerRequest:reject)
 ```
 
-**✅ Test:** Başvur → admin onayla → kullanıcı logout oldu mu? Yeniden login → role: "organizer" token alıyor mu?
+** Test:** Başvur → admin onayla → kullanıcı logout oldu mu? Yeniden login → role: "organizer" token alıyor mu?
 
 ---
 
@@ -520,7 +520,7 @@ PUT    /event-categories/:id  → sadece admin
 DELETE /event-categories/:id  → sadece admin
 ```
 
-**✅ Test:** Organizer login → event oluştur → public olarak listele → admin kategorileri yönetiyor mu?
+** Test:** Organizer login → event oluştur → public olarak listele → admin kategorileri yönetiyor mu?
 
 ---
 
@@ -575,11 +575,11 @@ DELETE /event-categories/:id  → sadece admin
 // Activity listesi: eventId.title populate
 ```
 
-**✅ Test:** Event'e bağlı aktiviteler listeleniyor mu? Forum'a yorum yapılabiliyor mu?
+** Test:** Event'e bağlı aktiviteler listeleniyor mu? Forum'a yorum yapılabiliyor mu?
 
 ---
 
-## 🔄 Her Model İçin Tekrar Eden Döngü
+##  Her Model İçin Tekrar Eden Döngü
 
 ```
 1. src/models/{model}.js       → Schema tanımla
@@ -590,7 +590,7 @@ DELETE /event-categories/:id  → sadece admin
 
 ---
 
-## 📋 Session → Model Eşleşmesi
+##  Session → Model Eşleşmesi
 
 | Session | Model(ler) | Kritik İş Mantığı |
 |---------|-----------|-------------------|
@@ -605,7 +605,7 @@ DELETE /event-categories/:id  → sadece admin
 
 ---
 
-## ✅ Session Sonrası Test Checklist
+##  Session Sonrası Test Checklist
 
 | Tamamlanan | Test Et |
 |------------|---------|
@@ -620,7 +620,7 @@ DELETE /event-categories/:id  → sadece admin
 
 ---
 
-## ⚠️ Kritik Güvenlik Notları
+##  Kritik Güvenlik Notları
 
 | Konu | Karar | Neden |
 |------|-------|-------|
@@ -635,7 +635,7 @@ DELETE /event-categories/:id  → sadece admin
 
 ---
 
-## 🚀 Hızlı Başlangıç
+##  Hızlı Başlangıç
 
 ```bash
 cd server

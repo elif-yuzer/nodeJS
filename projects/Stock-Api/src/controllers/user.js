@@ -5,6 +5,7 @@
 
 const Users = require('../models/user');
 const CustomError = require('../helpers/customError');
+const { userSchema } = require('../helpers/joiSchemas');
 
 module.exports = {
     list: async (req, res) => {
@@ -43,6 +44,13 @@ module.exports = {
                 }
             }
         */
+
+        const { error, value } = userSchema.validate(req.body);
+
+        if (error) {
+            const errorMessages = error.details.map(detail => detail.message).join(', ');
+            throw new CustomError(errorMessages, 401);
+        }
 
         const data = await Users.create(req.body)
 

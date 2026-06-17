@@ -1,0 +1,276 @@
+@baseUrl = http://127.0.0.1:8000
+@accessToken = Bearer {{login.response.body.bearer.access}}
+
+
+# @name home
+GET {{baseUrl}}
+
+###
+
+# @name login
+post {{baseUrl}}/auth/login
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "login": "admin2@example.com",
+    "password": "Admin21234."
+}
+
+###
+
+# @name register
+post {{baseUrl}}/auth/register
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "username": "test7",
+  "email": "test7@example.com",
+  "password": "Test71234.",
+  "firstName": "test7",
+  "lastName": "test7"
+}
+
+###
+
+# @name logout
+post {{baseUrl}}/auth/logout
+Authorization: {{accessToken}}
+
+###
+
+# @name refresh
+post {{baseUrl}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken":"{{login.response.body.bearer.refreshToken}}"
+}
+
+###
+
+# @name userList
+get {{baseUrl}}/users
+Authorization: {{accessToken}}
+
+###
+
+# @name userCreate
+post {{baseUrl}}/users
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "username": "test7",
+  "email": "test7@test.com",
+  "password": "Test1234?!",
+  "firstName": "test7",
+  "lastName": "test7"
+}
+
+###
+
+# @name userUpdate
+put {{baseUrl}}/users/6a2bd1a4263aca87f222f7a3
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "password": "Test1234!"
+}
+
+###
+
+
+# @name flightsListFilter
+get {{baseUrl}}/flights?startDate=2026-06-10&endDate=2026-06-15
+Authorization: {{accessToken}}
+
+
+###
+
+# @name flightCreate
+post {{baseUrl}}/flights
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "flightNumber": "TK1024",
+  "airline": "Turkish Airlines",
+  "departure": "Istanbul Airport",
+  "departureDate": "2026-07-15T08:30:00.000Z",
+  "arrival": "Berlin Brandenburg Airport",
+  "arrivalDate": "2026-07-15T11:10:00.000Z",
+  "seatCapacity": 180,
+  "availableSeats": 180,
+  "price": 149.99
+}
+
+###
+
+
+# @name flightRead
+get {{baseUrl}}/flights/6a244eb673d4fc8c18495162
+Authorization: {{accessToken}}
+
+###
+
+# @name flightUpdate
+put {{baseUrl}}/flights/6a244eb673d4fc8c18495162
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "flightNumber": "TK1024",
+  "airline": "Turkish Airlines",
+  "departure": "Izmir Airport",
+  "departureDate": "2026-07-15T08:30:00.000Z",
+  "arrival": "Berlin Brandenburg Airport",
+  "arrivalDate": "2026-07-15T11:10:00.000Z",
+  "seatCapacity": 180,
+  "availableSeats": 180,
+  "price": 149.99
+}
+
+###
+
+# @name flightDelete
+delete {{baseUrl}}/flights/6a1e992d26e3f3ed7c5f1e96
+Authorization: {{accessToken}}
+###
+
+# @name userList
+get {{baseUrl}}/users/
+
+
+###
+
+# @name userRead
+get {{baseUrl}}/users/6a01a22139ec49344f7857a8
+
+
+###
+
+# @name userCreate
+post {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "username": "ayla",
+    "email": "aylaataydir@gmail.com",
+    "password": "1234",
+    "isAdmin": true
+}
+
+
+###
+
+# @name userUpdate
+put {{baseUrl}}/users/6a030171c1c8a005b6a263a5
+Content-Type: application/json
+
+{
+    "isAdmin": true
+}
+
+###
+
+# @name userDelete
+delete {{baseUrl}}/users/6a10185b52a2f0f53b231cb9
+
+###
+
+# @name reservationList
+get {{baseUrl}}/reservations/
+Authorization: {{accessToken}}
+
+###
+
+# @name reservationRead
+get {{baseUrl}}/reservations/69f86c482265bbd9fe6122eb
+Authorization: {{accessToken}}
+
+###
+
+# @name reservationCreate
+post {{baseUrl}}/reservations
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+  "flightId": "6a244eb673d4fc8c18495162",
+  "passengers": [
+    {
+      "passenger": {
+        "firstName": "Ayla",
+        "lastName": "Ay",
+        "gender": "female",
+        "email": "ayla@example.com",
+        "passportNo": "U1234237"
+      },
+      "seatNumber": "12C"
+    },
+    {
+      "passenger": {
+        "firstName": "Ela",
+        "lastName": "Ay",
+        "gender": "female",
+        "email": "ela@example.com",
+        "passportNo": "U7654324"
+      },
+      "seatNumber": "12D"
+    }
+  ]
+}
+
+###
+
+# @name reservationUpdate
+put {{baseUrl}}/reservations/69f86c482265bbd9fe6122eb
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "name": "user abc"
+}
+
+###
+
+# @name reservationDelete
+delete {{baseUrl}}/reservations/69f86bf22265bbd9fe6122e9
+Authorization: {{accessToken}}
+
+###
+# @name passengersList
+get {{baseUrl}}/passengers/
+Authorization: {{accessToken}}
+
+###
+
+# @name passengerRead
+get {{baseUrl}}/passengers/69f86c482265bbd9fe6122eb
+Authorization: {{accessToken}}
+
+###
+
+
+
+###
+
+# @name passengerUpdate
+put {{baseUrl}}/passengers/69f86c482265bbd9fe6122eb
+Content-Type: application/json
+Authorization: {{accessToken}}
+
+{
+    "name": "user abc"
+}
+
+###
+
+# @name passengerDelete
+delete {{baseUrl}}/passengers/69f86bf22265bbd9fe6122e9
+Authorization: {{accessToken}}
+
+###
