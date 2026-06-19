@@ -1,0 +1,14 @@
+cat > views/error.ejs << 'EOF'
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Hata</title>
+</head>
+<body>
+  <h1>Bir hata oluştu</h1>
+  <p><strong>Mesaj:</strong> {%= data.message %}</p>
+  <a href="/">Anasayfaya dön</a>
+</body>
+</html>
+EOF

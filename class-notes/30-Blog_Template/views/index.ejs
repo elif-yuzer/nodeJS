@@ -1,0 +1,23 @@
+cat > views/index.ejs << 'EOF'
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog</title>
+</head>
+<body>
+  <h1>Blog Yazıları</h1>
+  <ul>
+    {% data.forEach(post => { %}
+      <li>
+        <strong>{%= post.title %}</strong>
+        {% if (post.blogCategoryId) { %}
+          <em> - {%= post.blogCategoryId.name %}</em>
+        {% } %}
+      </li>
+    {% }) %}
+  </ul>
+  
+</body>
+</html>
+EOF
