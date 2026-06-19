@@ -202,6 +202,8 @@ app.get('/', async (req, res) => {
 ```
 
 ```ejs
+
+
 <%= degisken %>             ← tarayıcıda görünür
 ```
 
@@ -819,3 +821,41 @@ views/
 ```
 
 > `include` için `<%-` kullanılır çünkü HTML içerik ekleniyor.
+
+/*************************/
+Kullanıcı SİL butonuna basar
+  ↓
+Tarayıcı POST /view/3?_method=DELETE gönderir
+  ↓
+method-override paketi _method=DELETE görür
+  ↓
+POST isteğini DELETE'e çevirir
+  ↓
+Router DELETE /view/3 olarak algılar
+  ↓
+todo.delete fonksiyonu çalışır
+  ↓
+DB'den silinir, /view'e redirect edilir
+
+/*************************/
+Kullanıcı UPDATE formunu gönderir
+  ↓
+Tarayıcı POST /view/3?_method=PUT gönderir
+  ↓
+method-override paketi _method=PUT görür
+  ↓
+POST isteğini PUT'a çevirir
+  ↓
+Router PUT /view/3 olarak algılar
+  ↓
+todo.update fonksiyonu çalışır
+  ↓
+Controller önce kaydı DB'den bulur
+  ↓
+Formdan gelen alan boşsa eski değer korunur
+  ↓
+Dolu gelen alanlar güncellenir
+  ↓
+DB kaydedilir, /view'e redirect edilir
+
+> Bu yöntemde formda boş bırakılan input'lar mevcut veriyi silmez; sadece dolu gelen alanlar update edilir.

@@ -24,6 +24,8 @@ app.set("view engine", "ejs");
 // Accept json data
 app.use(express.json());
 
+//accept form data
+
 /* ----------------------------------------------------- */
 // Routes:
 

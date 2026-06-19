@@ -1,12 +1,19 @@
 'use strict'
 
 module.exports = (err, req, res, next) => {
-  // console.log(res.errStatusCode);
   const statusCode = res.errStatusCode ?? 500;
-  res.status(statusCode).send({
+
+  const data = {
     error: true,
     message: err.message,
-    cause: err.cause,
-    stack: err.stack,
-  });
+    cause: err.cause
+  }
+
+  if (req.originalUrl.startsWith('/api')) {
+    // /api/todos gibi bir URL ise → JSON döndür
+    res.status(statusCode).send(data);
+  } else {
+    // /view gibi bir URL ise → EJS sayfası göster
+    res.render('errors', { data })
+  }
 };

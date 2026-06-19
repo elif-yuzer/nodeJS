@@ -9,7 +9,8 @@ const todo = require("../controllers/todoController.view");
 
 router.route("/").get(todo.list).post(todo.create);
 
-router.route("/:id").get(todo.read).put(todo.update).delete(todo.delete);
+router.route("/:id").get(todo.read).put(todo.update);
+router.get("/:id/delete", todo.delete);
 
 router.patch("/:id/toggle", todo.toggle);
 
