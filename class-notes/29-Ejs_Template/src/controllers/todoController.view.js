@@ -31,6 +31,17 @@ module.exports = {
     res.render("todoRead", { todo, PRIORITIES });
   },
 
+  edit: async (req, res) => {
+    const todo = await Todo.findByPk(req.params.id);
+
+    if (!todo) {
+      res.errStatusCode = 404;
+      throw new Error("Todo is not found.");
+    }
+
+    res.render("todoEdit", { todo, PRIORITIES });
+  },
+
   update: async (req, res) => {
     const todo = await Todo.findByPk(req.params.id);
 
@@ -46,9 +57,10 @@ module.exports = {
       description: hasValue(req.body.description)
         ? req.body.description.trim()
         : todo.description,
-      priority: hasValue(req.body.priority) && !Number.isNaN(priority)
-        ? priority
-        : todo.priority,
+      priority:
+        hasValue(req.body.priority) && !Number.isNaN(priority)
+          ? priority
+          : todo.priority,
       isDone:
         req.body.isDone === undefined || req.body.isDone === ""
           ? todo.isDone

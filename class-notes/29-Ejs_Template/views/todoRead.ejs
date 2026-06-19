@@ -41,6 +41,7 @@
           <td><%= todo.createdAt.toLocaleDateString('tr') %></td>
         </tr>
       </table>
+      <a href="/view/<%= todo.id %>/edit" class="btn btn-warning">UPDATE</a>
       <a href="/view" class="btn btn-secondary">← Geri Dön</a>
     </div>
   </body>

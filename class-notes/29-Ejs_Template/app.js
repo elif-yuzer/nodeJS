@@ -25,6 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 
 //accept form data
+app.use(express.urlencoded({ extended: true }));
 
 /* ----------------------------------------------------- */
 // Routes:
